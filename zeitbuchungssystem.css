@@ -1,5 +1,6 @@
-table, th, td, tr {
+.kalender, .kalender th, .kalender td, .kalender tr {
     border: 1px solid gray;
     border-collapse: collapse; /*tabellenlinien zsm*/
     table-layout: fixed; /*alle Spalten gleich breit*/
+    text-align: center;
 }
