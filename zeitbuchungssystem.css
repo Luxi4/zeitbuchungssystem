@@ -4,3 +4,14 @@
     table-layout: fixed; /*alle Spalten gleich breit*/
     text-align: center;
 }
+.modul-zeitübersicht, .modul-zeitübersicht th, .modul-zeitübersicht td, .modul-zeitübersicht tr {
+    border: 1px solid gray;
+    border-collapse: collapse; /*tabellenlinien zsm*/
+    height: 20px;
+}
+.arbeitsbericht, .arbeitsbericht th {
+    border: 1px solid gray;
+    border-collapse: collapse; /*tabellenlinien zsm*/
+    height: 20px;
+    text-align: left;
+}
