@@ -1,0 +1,14 @@
+{% extends "meine_app/base.html" %}
+
+{% block title %}{{ block.super }} - Login{% endblock %}
+
+{% block toggle_login %}{% endblock %}
+
+{% block content %}
+    <form action="{% url 'userauth_login' %}" method="post" accept-charset="utf-8">
+        {{ form.as_p }} <!--Notiz an mich: django-contrib.auth.views.login enthält form, hiermit kann man es rendern-->
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <input type="submit" value="Login"/>
+    </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>{% block title %}Meine Seite{% endblock %}</title>
+    </head>
+<header>
+    <h1>Login</h1>
+    {% block toggle_login %}
+        {% include "meine_app/toggle_login.html" %}
+    {% endblock %}
+</header>
+<body>
+    {% block content %}
+    <!--hier wird das login formular eingefügt-->
+    {% endblock %}
+</body>
+</html>
