@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Social-Media-Projekt </title>
+        <link rel="icon" 
+            type="image/x-icon" 
+            href="{% static 'teemLogo.png' %}";>
+        <link rel="stylesheet" href="{% static 'design.css' %}">
+    </head>
+
+    <body>
+        <p style="color:white";> ® All rights reserved by LILA productions</p>
+        <header> 
+            <img src="{% static 'teemLogo.png' %}";
+                height="150px"; width="300px;">
+        </header>
+
+        <nav class="navbar">
+            <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'my_account' %}">My Account</a></li>
+            <li><a href="{% url 'my_events' %}">Neue Events</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+        </nav>
+        
+        <footer class="about"> 
+            
+            <div class="container">
+                <div>
+                    <img class="footerpic"; 
+                        src="{% static 'LenaAvatar.png' %}">
+                    <br>
+                    <p> Lena Zschernitz <br> Scrum Master </p>
+                </div>
+                <div>
+                    <img class="footerpic"; 
+                    src="{% static 'IdaAvatar.png' %}">
+                    <br><p> Ida Waldherr <br> Developer </p>
+                </div>
+                <div>
+                    <img class="footerpic"; 
+                            src="{% static 'LucyAvatar.png' %}">
+                        <br><p> Lucy Cai <br> Product Owner </p>
+                </div>
+                <div>
+                    <img class="footerpic"; 
+                                src="{% static 'ArianaAvatar.png' %}">
+                            <br><p> Ariana Schramko <br> Developer </p>
+                </div>
+            </div>
+            <div class="blackbox">
+        <video width="100%" height="50" autoplay loop muted>
+        <source src="{% static 'pacman_gif.mp4' %}" type="video/mp4">
+    </video>
+    </div>
+        </footer>
+        <a href="{% url 'my_events' %}" class="floating-add-button">
+  <span>+</span>
+</a>
+    </body>
+
+</html>

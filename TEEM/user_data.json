@@ -1,0 +1,93 @@
+[
+  {
+    "nutzername": "1",
+    "email": "yo.ho@holio.day",
+    "passwort": "1",
+    "code": "a71633c8-88fd-412b-9292-0e22a666f8db",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "123",
+    "email": "yo.ho@holio.day",
+    "passwort": "123",
+    "code": "098bbf91-9370-450f-a1e6-8078f5b459d4",
+    "bestaetigt": false
+  },
+  {
+    "nutzername": "1234",
+    "email": "yo.ho@holio.day",
+    "passwort": "1234",
+    "code": "130b9ce03cc3446eaa3820feae664e95",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "12345",
+    "email": "yo.ho@holio.day",
+    "passwort": "12345",
+    "code": "8b90a8736e3e4411997cc41392a76a32",
+    "bestaetigt": false
+  },
+  {
+    "nutzername": "111",
+    "email": "yo.ho@holio.day",
+    "passwort": "111",
+    "code": "724848d34e764e899873eaff77f9d026",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "112",
+    "email": "teemdvm2025@gmail.com",
+    "passwort": "112",
+    "code": "f4d9f72580d94cdcab43a4c1a0e9ec65",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "1122",
+    "email": "yo.ho@holio.day",
+    "passwort": "1122",
+    "code": "5372286d639f4ff79836f41a8e2925c7",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "abc",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "078993c647fd40cc95ad7cb3d0c3d9cc",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "b2a3eb823f7d4acdba95cc8bff5f59c5",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "abc",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "e23a87690416410b811d9de3f804d0e0",
+    "bestaetigt": false
+  },
+  {
+    "nutzername": "abc",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "bce4f16bb74d4e1f852a77d96d5e6e37",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "abc",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "5cecfa16a5cc47d6b0f09c5e53d3edc8",
+    "bestaetigt": true
+  },
+  {
+    "nutzername": "hallo",
+    "email": "Waldherr_Ida@teams.hs-ludwigsburg.de",
+    "passwort": "abc",
+    "code": "a43ad7bd9064480ba618aca785616ab9",
+    "bestaetigt": false
+  }
+]

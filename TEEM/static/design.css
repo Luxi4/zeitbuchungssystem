@@ -1,0 +1,192 @@
+body {background-color:rgb(183, 71, 228);                
+        color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+       }
+p {color: white;
+        font-size: medium;}
+h1 {color: white; }
+
+header {text-align: center;
+        background-color: white;
+        font-size: 30px;
+        border-style: dashed;
+        border-color: black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+footer.about {background-color: rgb(135, 77, 143);
+        text-align: center;
+        padding: 10px;
+        height: auto;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
+div.container {width:100%;
+        overflow:auto;
+        }
+div.container div {width:20%;
+        float:left;
+        padding-top: 10px;}
+div.container div:hover{
+        background-color: black;
+        border-style: dashed;
+        border-color: white;
+}
+img.footerpic {width: 50px;
+                height:50px;
+                border-radius: 50%;
+                }
+
+.navbar ul{
+        list-style-type: none;
+        background-color: black;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+        border-style: dashed;
+        border-color: white;
+}
+.navbar a{
+        color: white;
+        text-decoration: none;
+        padding: 15px;
+        display: block;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+}
+.navbar a:hover{
+        background-color: rgb(135, 77, 143);
+        box-shadow: 10px 10px black;
+}
+.navbar li{
+        float: left;
+}
+div.blackbox{
+        background-color: black;
+        color: white;
+        padding: 30px;
+        border-style: dashed;
+        border-color: white;
+        margin: 30px;
+}
+
+.floating-add-button {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: orange;
+    color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    z-index: 1000;
+    border-style: dashed;
+    border-color: black;
+  }
+  
+  .floating-add-button:hover {
+    background-color: darkorange;  /* Dunkleres Blau bei Hover */
+    color: black
+    
+  }
+
+  .Kommentare {
+    width: 100%;
+    max-width: 800px;
+    background-color: orange;
+    color: black;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .Kommentare h4 {
+    margin-top: 0; /*kein Abstand nach oben*/
+    margin-bottom: 15px; /*Abstand zur Kommentarliste drunter*/
+    font-size: 18px;
+  }
+
+  .alle_kommentare {
+    max-height: 200px;
+    overflow-y: scroll;
+    padding-right: 5px; /*Innenabstand*/
+    margin-bottom: 10px;
+  }
+
+  /*Alle Kommentare*/
+  .einzelkommentar {
+    border-bottom: 1px solid rgb(58, 58, 58); /*Trennlinie*/
+    padding-bottom: 5px;
+    margin-bottom: 10px; /*Abstand zwischen Kommentaren*/
+  }
+
+  /*Kommentartext*/
+  .kommentartext {
+    margin: 0; /*Abstand nach außen*/
+    padding: 0; /*Abstand nach innen*/
+    font-size: 15px;
+    color: black;
+  }
+
+.kommentar-eingabe {
+  margin-top: 10px;
+  padding-right: 5px;
+}
+
+.kommentar-eingabe textarea {
+  width: 100%;
+  box-sizing: border-box; /*berücksichtigt padding & border in Breite*/
+  resize: vertical; /*Höhe veränderbar, Breite nicht*/
+  min-height: 40px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid rgb(58, 58, 58);
+  border-radius: 4px;
+  font-family: arial;
+  background-color: darkorange;
+  color: white;
+}
+
+.kommentar-eingabe button {
+  margin-top: 5px;
+  padding: 6px 12px; /*Innenabstand oben&unten links&rechts*/
+  font-size: 14px;
+  border-radius: 4px; /*abgerundete Ecken*/
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+  /*Like-Formular*/
+  .like-form {
+    display: inline; /*kein Block-Element*/
+    margin: 0;
+    padding: 0;
+  }
+
+  /*Like-Button*/
+  .like-button {
+    border: none; /*kein Rahmen*/
+    background: none; /*kein Hintergrund*/
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  /*Like-Icon & Zähler*/
+   .like-icon {
+    vertical-align: middle; /*mittig zur Textzeile*/
+  }
+
+  .like-counter {
+    vertical-align: middle;
+  }
+
+  .fehler-meldung {
+    color: red;
+  }
