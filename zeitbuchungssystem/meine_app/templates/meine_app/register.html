@@ -5,9 +5,18 @@
 {% block toggle_login %}{% endblock %}
 
 {% block content %}
-<form action="{% url 'userauth_register' %}" method="post" accept-charset="utf-8">
-    {{ form.as_p }}
+<form method="post">
     {% csrf_token %}
-    <input type="submit" value="registrieren"/>
+    <label>Benutzername: </label><br>
+    <input type="text" name="benutzername" required><br><br>
+
+    <label>Email: </label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Passwort: </label><br>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Registrieren</button>
 </form>
+
 {% endblock %}
