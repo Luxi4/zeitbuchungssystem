@@ -9,7 +9,6 @@ def register(request):
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        role = request.POST.get("role", "einfach")
 
         users = load_users()
 
@@ -17,7 +16,7 @@ def register(request):
         if any(u.email == email for u in users):
             return render(request, "register.html", {"error": "E-Mail bereits registriert!"})
 
-        new_user = UserData(username, email, password, role)
+        new_user = UserData(username, email, password, role="einfach")
         users.append(new_user)
         save_users(users)
 
