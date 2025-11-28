@@ -1,49 +1,29 @@
-'''
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-'''
+from django.shortcuts import render, redirect
+from .models import UserData, load_users, save_users
 
-from user import User
-from pathlib import Path
-import json
+def home(request):
+    return render(request, "meine_app/home.html")
 
-alle_user = []
+def register(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        role = request.POST.get("role", "einfach")
 
-BASE_DIR = Path(__file__).resolve().parent
-json_file = BASE_DIR / "data" / "userdata.json"
+        users = load_users()
 
-with json_file.open("r", encoding="utf-8") as file:
-    json_data = json.load(file)
-    for obj in json_data:
-        user_obj = User.from_dict(obj)
-        alle_user.append(user_obj)
+        #Prüfen, ob E-Mail schon existiert
+        if any(u.email == email for u in users):
+            return render(request, "register.html", {"error": "E-Mail bereits registriert!"})
 
-print(alle_user)
+        new_user = UserData(username, email, password, role)
+        users.append(new_user)
+        save_users(users)
 
-output_dir = BASE_DIR / "output"
-output_dir.mkdir(exist_ok=True)
-output_file = output_dir / "new_data.json"
+        return redirect("success")
+    
+    return render(request, "meine_app/register.html")
 
-alle_user_as_dicts = [user.to_dict() for user in alle_user]
-
-with output_file.open("w", encoding="utf-8") as file:
-    json.dump(alle_user_as_dicts, file, indent=4, ensure_ascii=False)
-
-
-'''
-def register(request, template_name='meine_app/register.html', next_page_name=None):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            if next_page_name is None:
-                next_page = '/'
-            else:
-                next_page = reverse(next_page_name)
-            return HttpResponseRedirect(next_page)
-    else:
-        form = UserCreationForm()
-    return render(request, template_name, {'form': form})
-'''
+def success(request):
+    return render(request, "meine_app/success.html")
