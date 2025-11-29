@@ -13,8 +13,9 @@ def register(request):
         users = load_users()
 
         #Prüfen, ob E-Mail schon existiert
-        if any(u.email == email for u in users):
-            return render(request, "meine_app/register.html", {"error": "E-Mail bereits registriert!"})
+        for u in users:
+            if u.email == email:
+                return render(request, "meine_app/register.html", {"error": "E-Mail ist bereits registriert!"})
 
         new_user = UserData(username, email, password, role="einfach")
         users.append(new_user)
