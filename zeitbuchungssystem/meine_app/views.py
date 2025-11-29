@@ -4,6 +4,7 @@ from .models import UserData, load_users, save_users
 def home(request):
     return render(request, "meine_app/home.html")
 
+#registrierung
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -27,3 +28,8 @@ def register(request):
 
 def success(request):
     return render(request, "meine_app/success.html")
+
+
+#arbeitsberichte
+def arbeitsberichte(request):
+    return render(request, "meine_app/arbeitsberichte.html")

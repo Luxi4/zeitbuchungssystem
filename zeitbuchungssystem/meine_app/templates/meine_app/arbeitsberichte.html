@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="zeitbuchungssystem.css">
+        <title>Zeitbuchungssystem</title>
+    </head>
+
+    <body>
+        <header><img src="logo.png" alt="Logo" height="40px" width="40px"> Zeitbuchungssystem</header>
+        <div style="height: 15px; background-color: lightgray;"></div>
+
+        <table>
+          <tr>
+            <td>
+                <img src="profil_platzhaltergrafik.png" alt="Profil" height="130px" width=auto>
+            </td>
+            <td style="vertical-align: top; padding-left: 8px;">
+                <p>
+                    Name: Lucy Cai<br> <!--!!!muss das hier dynamisch später machen, Daten iwo herbekommen!!!-->
+                    Matrikel-Nr.: 996388<br>
+                    Kurs: DVM24
+                </p>
+            </td>
+          </tr>
+        </table>
+        <br>
+
+        <h4>Überschrift</h4>
+        {% for kommentar in kommentare %}
+            <div class="kommentar-block">
+
+                <p class="kommentar-text">
+                    <strong>{{ kommentar.name }}</strong>
+                    <span style="color: gray;">{{ kommentar.zeit}}</span>
+                    {{ kommentar.text}}
+                </p>
+            </div>
+        {% empty %}
+            <p>Noch keine Einträge.</p>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="text">Kommentar:</label>
+            <textarea id="text" name="text" required></textarea>
+            <button type="submit">Absenden</button>
+        </form>
+        
+    </body>
+</html>
