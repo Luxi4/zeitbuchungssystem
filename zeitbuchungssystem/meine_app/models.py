@@ -2,7 +2,9 @@ import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-json_file = BASE_DIR / "data" / "userdata.json"
+pfad_users = BASE_DIR / "data" / "userdata.json"
+pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
+
 
 class UserData:
     def __init__(self, username, email, password, role="einfach"):
@@ -29,12 +31,15 @@ class UserData:
         )
 
 def load_users():
-    if json_file.exists():
-        with json_file.open("r", encoding="utf-8") as f:
+    if pfad_users.exists():
+        with pfad_users.open("r", encoding="utf-8") as f:
             data = json.load(f)
             return [UserData.from_dict(obj) for obj in data]
     return []
 
 def save_users(users):
-    with json_file.open("w", encoding="utf-8") as f:
+    with pfad_users.open("w", encoding="utf-8") as f:
         json.dump([u.to_dict() for u in users], f, indent=4, ensure_ascii=False)
+
+
+

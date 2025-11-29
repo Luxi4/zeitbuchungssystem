@@ -31,5 +31,44 @@ def success(request):
 
 
 #arbeitsberichte
+pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
+
 def arbeitsberichte(request):
-    return render(request, "meine_app/arbeitsberichte.html")
+    # arbeitsberichte laden
+    try:
+        with open(pfad, 'r') as f:
+            arbeitsberichte = json.load(f)
+    except Exception:
+        arbeitsberichte = []
+
+    if request.method == "POST":
+        name = request.COOKIES.get('nutzername')  # Benutzername aus Cookies holen
+
+        # Nicht eingeloggt
+        if not name:
+            return render(request, 'accounts/event_angeklickt.html', {
+                'arbeitsberichte': arbeitsberichte,
+                'fehler': "Du musst eingeloggt sein, um zu kommentieren oder zu liken."
+            })
+
+        # Kommentar wurde abgeschickt - neuer Kommentar an Liste anhängen
+        text = request.POST.get('text')
+        if text:
+            zeit = datetime.datetime.now().strftime("%d.%m.%Y - %H:%M")
+            arbeitsberichte.append({
+                "name": name,
+                "zeit": zeit,
+                "text": text,
+                "likes": 0,
+                "geliket_von": []
+            })
+
+            with open(pfad, 'w') as f:
+                json.dump(arbeitsberichte, f)
+
+            return redirect('home')
+
+    return render(request, 'arbeitsberichte.html', {
+        'arbeitsberichte': arbeitsberichte,
+        'username': request.COOKIES.get('username')
+    })
