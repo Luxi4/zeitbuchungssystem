@@ -1,21 +1,21 @@
 import json
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 json_file = BASE_DIR / "data" / "userdata.json"
 
 class UserData:
-    def __init__(self, username, password_hash, email, role="einfach"):
+    def __init__(self, username, email, password, role="einfach"):
         self.username = username
         self.email = email
-        self.password_hash = password_hash
+        self.password = password
         self.role = role
 
     def to_dict(self):
         return {
             "username": self.username,
             "email": self.email,
-            "password": self.password_hash.decode("utf-8"),
+            "password": self.password,
             "role": self.role,
         }
 
@@ -23,8 +23,8 @@ class UserData:
     def from_dict(cls, data):
         return cls(
             username=data.get("username"),
-            password_hash=data.get("password-hash").encode("utf-8"),
             email=data.get("email"),
+            password=data.get("password"),
             role=data.get("role", "einfach"),
         )
 
@@ -33,7 +33,7 @@ def load_users():
         with json_file.open("r", encoding="utf-8") as f:
             data = json.load(f)
             return [UserData.from_dict(obj) for obj in data]
-        return []
+    return []
 
 def save_users(users):
     with json_file.open("w", encoding="utf-8") as f:
