@@ -29,7 +29,7 @@ def register(request):
 def success(request):
     return render(request, "meine_app/success.html")
 
-
+'''
 #arbeitsberichte
 pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
 
@@ -72,3 +72,4 @@ def arbeitsberichte(request):
         'arbeitsberichte': arbeitsberichte,
         'username': request.COOKIES.get('username')
     })
+'''
