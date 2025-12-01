@@ -1,0 +1,26 @@
+[
+    {
+        "username": "Cai_Lucy",
+        "email": "Cai_Lucy@teams.hs-ludwigsburg.de",
+        "password": "8characters",
+        "role": "einfach"
+    },
+    {
+        "username": "test",
+        "email": "test1@teams.hs-ludwigsburg.de",
+        "password": "8characters",
+        "role": "einfach"
+    },
+    {
+        "username": "test",
+        "email": "test2@teams.hs-ludwigsburg.de",
+        "password": "8characters",
+        "role": "einfach"
+    },
+    {
+        "username": "test",
+        "email": "test3@teams.hs-ludwigsburg.de",
+        "password": "8characters",
+        "role": "einfach"
+    }
+]

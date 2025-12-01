@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import UserData, load_users, save_users
 
+import json
+from pathlib import Path
+from django.http import JsonResponse
+
 def home(request):
     return render(request, "meine_app/home.html")
 
@@ -73,3 +77,15 @@ def arbeitsberichte(request):
         'username': request.COOKIES.get('username')
     })
 '''
+
+
+#json &/ csv Datenquelle online stellen & link teilen
+def online_datenquelle(request):
+
+    BASE_DIR = Path(__file__).resolve().parent
+    json_path = BASE_DIR / "data" / "userdata.json"
+
+    with open(json_path, "r") as f:
+        data = json.load(f)
+
+    return JsonResponse({"users": data})

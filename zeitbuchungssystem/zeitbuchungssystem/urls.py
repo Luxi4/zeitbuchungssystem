@@ -6,4 +6,5 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("success/", views.success, name="success"),
     #path("arbeitsberichte/", views.arbeitsberichte, name="arbeitsberichte"),
+    path("datenquelle/", views.online_datenquelle),
 ]
