@@ -47,7 +47,7 @@ def arbeitsberichte_view(request):
 
         if min and modul and inhalt:
             neuer_bericht = Arbeitsberichte(modul, datum, min, inhalt)
-            berichte.append(neuer_bericht.to_dict())
+            berichte.insert(0, neuer_bericht.to_dict())
             speichere_berichte(berichte)
         return redirect("arbeitsberichte")
 

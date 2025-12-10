@@ -60,11 +60,11 @@ class Arbeitsberichte:
 
 def lade_berichte():
     try:
-        with open (pfad_arbeitsberichte, "r") as f:
+        with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
 def speichere_berichte(berichte):
-    with open(pfad_arbeitsberichte, "w") as f:
-        json.dump(berichte, f)
+    with open(pfad_arbeitsberichte, "w", encoding="utf-8") as f:
+        json.dump(berichte, f, indent=2, ensure_ascii=False)
