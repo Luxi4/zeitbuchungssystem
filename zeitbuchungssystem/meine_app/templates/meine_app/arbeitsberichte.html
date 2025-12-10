@@ -25,27 +25,37 @@
         </table>
         <br>
 
-        <h4>Überschrift</h4>
-        {% for kommentar in kommentare %}
-            <div class="kommentar-block">
+        <h4>Meine Arbeitsberichte</h4>
 
-                <p class="kommentar-text">
-                    <strong>{{ kommentar.name }}</strong>
-                    <span style="color: gray;">{{ kommentar.zeit}}</span>
-                    {{ kommentar.text}}
+        <form method="post">
+            {% csrf_token %}
+            <label for="modul">Modul:</label>
+            <input type="text" id="modul" name="modul" required>
+
+            <label for="datum">Datum:</label>
+            <input type="text" id="datum" name="datum" required>
+
+            <label for="min">Arbeitszeit (Minuten):</label>
+            <input type="number" id="min" name="min" required>
+
+            <label for="inhalt">Bericht:</label>
+            <textarea id="inhalt" name="inhalt" required></textarea>
+
+            <button type="submit">Absenden</button>
+        </form>
+
+        {% for bericht in arbeitsberichte %}
+            <div class="bericht-block">
+                <p class="bericht-text">
+                    <strong>{{ bericht.modul }}</strong>
+                    <span>{{ bericht.min }} min - {{ bericht.datum }}
+                    </span>
+                    {{ bericht.inhalt }}
                 </p>
             </div>
         {% empty %}
             <p>Noch keine Einträge.</p>
         {% endfor %}
 
-        <form method="post">
-            {% csrf_token %}
-
-            <label for="text">Kommentar:</label>
-            <textarea id="text" name="text" required></textarea>
-            <button type="submit">Absenden</button>
-        </form>
-        
     </body>
 </html>

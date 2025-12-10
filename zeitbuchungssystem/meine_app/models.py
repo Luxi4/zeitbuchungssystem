@@ -43,3 +43,28 @@ def save_users(users):
 
 
 
+class Arbeitsberichte:
+    def __init__(self, modul, datum, min, inhalt):
+        self.modul = modul
+        self.datum = datum
+        self.min = min
+        self.inhalt = inhalt
+
+    def to_dict(self):
+        return {
+            "modul": self.modul,
+            "datum": self.datum,
+            "min": self.min,
+            "inhalt": self.inhalt,
+        }
+
+def lade_berichte():
+    try:
+        with open (pfad_arbeitsberichte, "r") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+def speichere_berichte(berichte):
+    with open(pfad_arbeitsberichte, "w") as f:
+        json.dump(berichte, f)

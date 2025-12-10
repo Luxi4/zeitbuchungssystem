@@ -22,5 +22,11 @@
         "email": "test3@teams.hs-ludwigsburg.de",
         "password": "8characters",
         "role": "einfach"
+    },
+    {
+        "username": "abc",
+        "email": "123@321",
+        "password": "asdfghjklöä",
+        "role": "einfach"
     }
 ]

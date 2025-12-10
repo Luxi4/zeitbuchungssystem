@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import UserData, load_users, save_users
+from .models import Arbeitsberichte, lade_berichte, speichere_berichte
 
 import json
 from pathlib import Path
@@ -33,53 +34,28 @@ def register(request):
 def success(request):
     return render(request, "meine_app/success.html")
 
-'''
-#arbeitsberichte
-pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
 
-def arbeitsberichte(request):
-    # arbeitsberichte laden
-    try:
-        with open(pfad, 'r') as f:
-            arbeitsberichte = json.load(f)
-    except Exception:
-        arbeitsberichte = []
+#arbeitsberichte
+def arbeitsberichte_view(request):
+    berichte = lade_berichte()
 
     if request.method == "POST":
-        name = request.COOKIES.get('nutzername')  # Benutzername aus Cookies holen
+        modul = request.POST.get("modul")
+        datum = request.POST.get("datum")
+        min = request.POST.get("min")
+        inhalt = request.POST.get("inhalt")
 
-        # Nicht eingeloggt
-        if not name:
-            return render(request, 'accounts/event_angeklickt.html', {
-                'arbeitsberichte': arbeitsberichte,
-                'fehler': "Du musst eingeloggt sein, um zu kommentieren oder zu liken."
-            })
+        if min and modul and inhalt:
+            neuer_bericht = Arbeitsberichte(modul, datum, min, inhalt)
+            berichte.append(neuer_bericht.to_dict())
+            speichere_berichte(berichte)
+        return redirect("arbeitsberichte")
 
-        # Kommentar wurde abgeschickt - neuer Kommentar an Liste anhängen
-        text = request.POST.get('text')
-        if text:
-            zeit = datetime.datetime.now().strftime("%d.%m.%Y - %H:%M")
-            arbeitsberichte.append({
-                "name": name,
-                "zeit": zeit,
-                "text": text,
-                "likes": 0,
-                "geliket_von": []
-            })
+    return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": berichte})
 
-            with open(pfad, 'w') as f:
-                json.dump(arbeitsberichte, f)
 
-            return redirect('home')
-
-    return render(request, 'arbeitsberichte.html', {
-        'arbeitsberichte': arbeitsberichte,
-        'username': request.COOKIES.get('username')
-    })
 '''
-
-
-#json &/ csv Datenquelle online stellen & link teilen
+#Aufg. json &/ csv Datenquelle online stellen & link teilen
 def online_datenquelle(request):
 
     BASE_DIR = Path(__file__).resolve().parent
@@ -89,3 +65,4 @@ def online_datenquelle(request):
         data = json.load(f)
 
     return JsonResponse({"users": data})
+'''
