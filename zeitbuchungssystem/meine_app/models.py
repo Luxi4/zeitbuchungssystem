@@ -70,11 +70,38 @@ def speichere_berichte(berichte):
         json.dump(berichte, f, indent=2, ensure_ascii=False)
 
 
-def gesamt_arbeitszeit():
+#gesamtübersicht
+def zeit_pro_modul():
     with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
         daten = json.load(f)
-        alle_min = []
+
+        summen = {}
         for eintrag in daten:
+            modul = eintrag["modul"]
             minuten = eintrag["minuten"]
-        alle_min.append(minuten)
-    return sum(alle_min)
+
+            if modul not in summen:
+                summen[modul] = 0
+            
+            summen[modul] += minuten
+
+    return summen
+
+def prozentanteile():
+    summen = zeit_pro_modul()
+    gesamt = 0
+
+    for modul in summen:
+        gesamt = gesamt + summen[modul]
+    
+    ergebnis = []
+    for modul in summen:
+        minuten = summen[modul]
+        prozent = minuten / gesamt * 100
+        ergebnis.append({
+            "modul": modul,
+            "minuten": minuten,
+            "prozent": prozent
+        })
+    
+    return ergebnis
