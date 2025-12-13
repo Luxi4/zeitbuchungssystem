@@ -42,11 +42,11 @@ def arbeitsberichte_view(request):
     if request.method == "POST":
         modul = request.POST.get("modul")
         datum = request.POST.get("datum")
-        min = request.POST.get("min")
+        minuten = request.POST.get("minuten")
         inhalt = request.POST.get("inhalt")
 
-        if min and modul and inhalt:
-            neuer_bericht = Arbeitsberichte(modul, datum, min, inhalt)
+        if minuten and modul and inhalt:
+            neuer_bericht = Arbeitsberichte(modul, datum, minuten, inhalt)
             berichte.insert(0, neuer_bericht.to_dict())
             speichere_berichte(berichte)
         return redirect("arbeitsberichte")

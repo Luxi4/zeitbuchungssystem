@@ -1,62 +1,68 @@
 [
   {
+    "modul": "hällu",
+    "datum": "tt.mm.yyyy",
+    "minuten": "12",
+    "inhalt": "das wars geht das noch"
+  },
+  {
     "modul": "ü",
     "datum": "ü",
-    "min": "1",
+    "minuten": "1",
     "inhalt": "jetzt gehts üöäöüäöüä"
   },
   {
     "modul": "ö",
     "datum": "ö",
-    "min": "9",
+    "minuten": "9",
     "inhalt": "ö"
   },
   {
     "modul": "ä",
     "datum": "ä",
-    "min": "0",
+    "minuten": "0",
     "inhalt": "ä"
   },
   {
     "modul": "äöäüüöäüöääüö",
     "datum": "üäö",
-    "min": "243546",
+    "minuten": "243546",
     "inhalt": "äüöööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööö"
   },
   {
     "modul": "äöü",
     "datum": "üöüä",
-    "min": "12",
+    "minuten": "12",
     "inhalt": "äöüäüöüäüöäüöüäö"
   },
   {
     "modul": "44",
     "datum": "44.44.4444",
-    "min": "44",
+    "minuten": "44",
     "inhalt": "4"
   },
   {
     "modul": "1.1.2",
     "datum": null,
-    "min": "120",
+    "minuten": "120",
     "inhalt": "Projekt"
   },
   {
     "modul": "1.1.2",
     "datum": null,
-    "min": "120",
+    "minuten": "120",
     "inhalt": "Projekt"
   },
   {
     "modul": "1.5.1 SA",
     "datum": "10.12.2025",
-    "min": "120",
+    "minuten": "120",
     "inhalt": "xyxyxyxyxy"
   },
   {
     "modul": "z",
     "datum": "z",
-    "min": "1",
+    "minuten": "1",
     "inhalt": "sdfg\r\ndfghjk\r\n"
   }
 ]
