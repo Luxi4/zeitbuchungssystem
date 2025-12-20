@@ -28,11 +28,5 @@
         "email": "123@321",
         "password": "asdfghjklöä",
         "role": "einfach"
-    },
-    {
-        "username": "8",
-        "email": "8@8",
-        "password": "88888888",
-        "role": "einfach"
     }
 ]

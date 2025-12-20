@@ -44,17 +44,17 @@ def save_users(users):
 
 
 class Arbeitsberichte:
-    def __init__(self, modul, datum, minuten, inhalt):
+    def __init__(self, modul, datum, min, inhalt):
         self.modul = modul
         self.datum = datum
-        self.minuten = minuten
+        self.min = min
         self.inhalt = inhalt
 
     def to_dict(self):
         return {
             "modul": self.modul,
             "datum": self.datum,
-            "minuten": self.minuten,
+            "min": self.min,
             "inhalt": self.inhalt,
         }
 
@@ -68,13 +68,3 @@ def lade_berichte():
 def speichere_berichte(berichte):
     with open(pfad_arbeitsberichte, "w", encoding="utf-8") as f:
         json.dump(berichte, f, indent=2, ensure_ascii=False)
-
-
-def gesamt_arbeitszeit():
-    with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
-        daten = json.load(f)
-        alle_min = []
-        for eintrag in daten:
-            minuten = eintrag["minuten"]
-        alle_min.append(minuten)
-    return sum(alle_min)
