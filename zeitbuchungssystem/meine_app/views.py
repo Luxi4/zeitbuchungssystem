@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import UserData, load_users, save_users
 from .models import Arbeitsberichte, lade_berichte, speichere_berichte
-from .models import zeit_pro_modul, pfad_arbeitsberichte, prozentanteile
 
 import json
 from pathlib import Path
@@ -53,11 +52,6 @@ def arbeitsberichte_view(request):
         return redirect("arbeitsberichte")
 
     return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": berichte})
-
-
-def gesamtübersicht(request):
-    daten = prozentanteile()
-    return render(request, "meine_app/gesamtübersicht.html", {"daten": daten})
 
 
 '''
