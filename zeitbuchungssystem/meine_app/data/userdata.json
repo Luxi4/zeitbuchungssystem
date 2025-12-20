@@ -34,5 +34,11 @@
         "email": "email@mail",
         "password": "pwpwpwpwpwpw",
         "role": "einfach"
+    },
+    {
+        "username": "schreibrechte",
+        "email": "schreibrechte@gmail",
+        "password": "schreibrechteeben",
+        "role": "einfach"
     }
 ]
