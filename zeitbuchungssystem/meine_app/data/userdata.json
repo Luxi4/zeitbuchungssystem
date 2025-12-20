@@ -28,5 +28,11 @@
         "email": "123@321",
         "password": "asdfghjklöä",
         "role": "einfach"
+    },
+    {
+        "username": "benutz",
+        "email": "email@mail",
+        "password": "pwpwpwpwpwpw",
+        "role": "einfach"
     }
 ]
