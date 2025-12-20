@@ -43,7 +43,7 @@ def arbeitsberichte_view(request):
     if request.method == "POST":
         modul = request.POST.get("modul")
         datum = request.POST.get("datum")
-        minuten = int(request.POST.get("minuten"))
+        minuten = request.POST.get("minuten")
         inhalt = request.POST.get("inhalt")
 
         if minuten and modul and inhalt:
