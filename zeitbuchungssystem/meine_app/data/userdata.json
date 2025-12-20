@@ -34,5 +34,11 @@
         "email": "8@8",
         "password": "88888888",
         "role": "einfach"
+    },
+    {
+        "username": "gehtdasnoch",
+        "email": "gehtdasnoch@mail.de",
+        "password": "gehtdasnoch",
+        "role": "einfach"
     }
 ]
