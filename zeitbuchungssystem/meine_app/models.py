@@ -97,7 +97,7 @@ def prozentanteile():
     ergebnis = []
     for modul in summen:
         minuten = summen[modul]
-        prozent = minuten / gesamt * 100
+        prozent = round(minuten / gesamt * 100, 2)
         ergebnis.append({
             "modul": modul,
             "minuten": minuten,

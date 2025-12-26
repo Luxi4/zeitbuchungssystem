@@ -1,5 +1,17 @@
 [
   {
+    "modul": "z",
+    "datum": "26.12.2025",
+    "minuten": 1,
+    "inhalt": "rechne z"
+  },
+  {
+    "modul": "1.5.1 SA",
+    "datum": "26.12.2025",
+    "minuten": 50,
+    "inhalt": "addiere test"
+  },
+  {
     "modul": "1.4.4",
     "datum": "26.12.2025",
     "minuten": 4,
