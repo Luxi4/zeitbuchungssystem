@@ -1,0 +1,84 @@
+/*bericht-box*/
+.bericht-block {
+    width: 80%;
+}
+
+.bericht-text strong {
+    font-size: 16px;
+}
+
+/*arbeitsberichte*/
+form {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 90%;
+    padding: 5px;
+    box-sizing: border-box;
+    margin:  20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(227, 227, 227);
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input, form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    height: 32px;
+    box-sizing: border-box;
+    flex: 1; /*damit alle felder gleich breit*/
+    min-width: 120px;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 10px;
+    background: lightgray;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+form button:hover {
+    background: gray;
+}
+
+table.berichte {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.berichte th, table.berichte td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+table.berichte th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+
+/*gesamtübersicht*/
+.modul-zeitübersicht {
+    border-collapse: collapse; /*tabellenlinien zsm*/
+    width: 85%;
+}
+
+.modul-zeitübersicht th, .modul-zeitübersicht td {
+    border: 1px solid gray;
+    padding: 6px;
+    height: 20px;
+}
+
+.modul-zeitübersicht th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
