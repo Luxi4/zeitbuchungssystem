@@ -44,17 +44,17 @@ def save_users(users):
 
 
 class Arbeitsberichte:
-    def __init__(self, modul, datum, min, inhalt):
+    def __init__(self, modul, datum, minuten, inhalt):
         self.modul = modul
         self.datum = datum
-        self.min = min
+        self.minuten = minuten
         self.inhalt = inhalt
 
     def to_dict(self):
         return {
             "modul": self.modul,
             "datum": self.datum,
-            "min": self.min,
+            "minuten": self.minuten,
             "inhalt": self.inhalt,
         }
 

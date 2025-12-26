@@ -40,5 +40,17 @@
         "email": "schreibrechte@gmail",
         "password": "schreibrechteeben",
         "role": "einfach"
+    },
+    {
+        "username": "weihnacht",
+        "email": "weihnacht@mail.de",
+        "password": "weihnachtenistfastrum",
+        "role": "einfach"
+    },
+    {
+        "username": "register",
+        "email": "reg@mail.de",
+        "password": "blabliblubb",
+        "role": "einfach"
     }
 ]
