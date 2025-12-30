@@ -70,6 +70,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'zeitbuchungssystem.wsgi.application'
 
 
+#Session-Einstelllungen
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

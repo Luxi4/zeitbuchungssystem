@@ -1,14 +1,16 @@
-{% extends "meine_app/base.html" %}
+<h2>Login</h2>
 
-{% block title %}{{ block.super }} - Login{% endblock %}
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
 
-{% block toggle_login %}{% endblock %}
+<form method="POST">
+    {% csrf_token %}
+    <label>E-Mail:</label>
+    <input type="email" name="email" required>
 
-{% block content %}
-    <form action="{% url 'userauth_login' %}" method="post" accept-charset="utf-8">
-        {{ form.as_p }} <!--Notiz an mich: django-contrib.auth.views.login enthält form, hiermit kann man es rendern-->
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}" />
-        <input type="submit" value="Login"/>
-    </form>
-{% endblock %}
+    <label>Passwort:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>

@@ -35,6 +35,30 @@ def register(request):
 def success(request):
     return render(request, "meine_app/success.html")
 
+#login
+def login_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        users = load_users()
+
+        for u in users:
+            if u.email == email and u.password == password:
+                request.session["user_email"] = u.email
+                request.session["username"] = u.username
+        
+                return redirect("arbeitsberichte")
+        
+        return render(request, "meine_app/login.html", {"error": "Login fehlgeschlagen!"})
+    
+    return render(request, "meine_app/login.html")
+
+#logout
+def logout_view(request):
+    request.session.flush() #löscht alle session-daten
+    return redirect("home")
+
 
 #arbeitsberichte
 def arbeitsberichte_view(request):
