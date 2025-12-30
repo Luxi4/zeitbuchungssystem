@@ -56,13 +56,22 @@ def login_view(request):
 
 #logout
 def logout_view(request):
-    request.session.flush() #löscht alle session-daten
-    return redirect("home")
+    if "user_email" in request.session:
+        del request.session["user_email"]
+    
+    if "username" in request.session:
+        del request.session["username"]
+
+    return redirect("logout_success")
+
+def logout_success(request):
+    return render(request, "meine_app/logout_success.html")
 
 
 #arbeitsberichte
 def arbeitsberichte_view(request):
     berichte = lade_berichte()
+    modul_übersicht = prozentanteile()
 
     if request.method == "POST":
         modul = request.POST.get("modul")
@@ -76,12 +85,12 @@ def arbeitsberichte_view(request):
             speichere_berichte(berichte)
         return redirect("arbeitsberichte")
 
-    return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": berichte})
+    return render(request, "meine_app/arbeitsberichte.html", {
+                      "arbeitsberichte": berichte,
+                      "modul_übersicht": modul_übersicht
+                  }
+                 )
 
-
-def gesamtübersicht(request):
-    daten = prozentanteile()
-    return render(request, "meine_app/gesamtübersicht.html", {"daten": daten})
 
 
 '''

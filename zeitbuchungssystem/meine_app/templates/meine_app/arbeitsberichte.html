@@ -37,7 +37,7 @@
         </table>
         <br>
 
-        <h4>Meine Arbeitsberichte</h4>
+        <h4>Meine Arbeitszeit pro Modul</h4>
 
         <form method="post">
             {% csrf_token %}
@@ -61,6 +61,7 @@
                 <th>Modul</th>
                 <th>Datum</th>
                 <th>Arbeitszeit (min)</th>
+                <th>% von gesamter Abeitszeit</th>
                 <th>Bericht</th>
             </tr>
             
@@ -68,12 +69,13 @@
         <tr>
             <td>{{ bericht.modul }}</td>
             <td>{{ bericht.datum }}</td>
-            <td style="text-align: right;">{{ bericht.minuten }}</td>
+            <td style="text-align: right;">{{ bericht.minuten }} min</td>
+            <td style="text-align: right;">{{ bericht.prozent}} %</td>
             <td>{{ bericht.inhalt }}</td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="4">Noch keine Einträge.</td>
+            <td colspan="5">Noch keine Einträge.</td>
         </tr>
         {% endfor %}
         </table>
