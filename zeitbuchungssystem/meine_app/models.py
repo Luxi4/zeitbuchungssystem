@@ -70,6 +70,7 @@ def speichere_berichte(berichte):
         json.dump(berichte, f, indent=2, ensure_ascii=False)
 
 
+#gesamtübersicht
 def zeit_pro_modul():
     with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
         daten = json.load(f)
