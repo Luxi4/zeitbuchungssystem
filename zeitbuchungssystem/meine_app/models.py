@@ -44,7 +44,8 @@ def save_users(users):
 
 
 class Arbeitsberichte:
-    def __init__(self, modul, datum, minuten, inhalt):
+    def __init__(self, username, modul, datum, minuten, inhalt):
+        self.username = username
         self.modul = modul
         self.datum = datum
         self.minuten = minuten
@@ -52,6 +53,7 @@ class Arbeitsberichte:
 
     def to_dict(self):
         return {
+            "username": self.username,
             "modul": self.modul,
             "datum": self.datum,
             "minuten": self.minuten,
@@ -71,26 +73,31 @@ def speichere_berichte(berichte):
 
 
 #gesamtübersicht
-def zeit_pro_modul():
+def zeit_pro_modul(username):
     with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
         daten = json.load(f)
 
         summen = {}
+
         for eintrag in daten:
-            modul = eintrag["modul"]
-            minuten = eintrag["minuten"]
+            if eintrag.get("username") == username:
+                modul = eintrag["modul"]
+                minuten = eintrag["minuten"]
 
-            if modul not in summen:
-                summen[modul] = 0
+                if modul not in summen:
+                    summen[modul] = 0
             
-            summen[modul] += minuten
+                summen[modul] += minuten
 
-    return summen
+        return summen
 
-def prozentanteile():
-    summen = zeit_pro_modul()
+def prozentanteile(username):
+    summen = zeit_pro_modul(username)
+
+    if not summen:
+        return []
+    
     gesamt = 0
-
     for modul in summen:
         gesamt = gesamt + summen[modul]
     
@@ -98,10 +105,13 @@ def prozentanteile():
     for modul in summen:
         minuten = summen[modul]
         prozent = round(minuten / gesamt * 100, 2)
-        ergebnis.append({
+
+        eintrag = {
             "modul": modul,
             "minuten": minuten,
             "prozent": prozent
-        })
+        }
+
+        ergebnis.append(eintrag)
     
     return ergebnis

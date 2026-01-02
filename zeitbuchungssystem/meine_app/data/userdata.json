@@ -52,5 +52,29 @@
         "email": "reg@mail.de",
         "password": "blabliblubb",
         "role": "einfach"
+    },
+    {
+        "username": "neujahr",
+        "email": "neujahr@mail.de",
+        "password": "frohesneues",
+        "role": "einfach"
+    },
+    {
+        "username": "heilig",
+        "email": "heilig@gmail.de",
+        "password": "heiliger",
+        "role": "einfach"
+    },
+    {
+        "username": "asdf",
+        "email": "asdf@mail.de",
+        "password": "asdfasdf",
+        "role": "einfach"
+    },
+    {
+        "username": "wert",
+        "email": "wert@gmail.com",
+        "password": "wert1234",
+        "role": "einfach"
     }
 ]

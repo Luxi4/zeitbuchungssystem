@@ -1,122 +1,51 @@
 [
   {
+    "username": "wert",
     "modul": "1.1.2 Inf",
-    "datum": "30.12.2025",
-    "minuten": 45,
-    "inhalt": "lalala"
+    "datum": "02.01.2026",
+    "minuten": 20,
+    "inhalt": "didum"
   },
   {
-    "modul": "1.1.2 Inf",
-    "datum": "30.12.2025",
-    "minuten": 45,
-    "inhalt": "login"
-  },
-  {
-    "modul": "1.1.2 Inf",
-    "datum": "30.12.2025",
-    "minuten": 45,
-    "inhalt": "xml und xpath geübt"
-  },
-  {
-    "modul": "4.4.4",
-    "datum": "26.12.2025",
-    "minuten": 45,
-    "inhalt": "funktioniert noch nachdem ich designet habe?"
-  },
-  {
-    "modul": "z",
-    "datum": "26.12.2025",
-    "minuten": 1,
-    "inhalt": "rechne z"
-  },
-  {
+    "username": "wert",
     "modul": "1.5.1 SA",
-    "datum": "26.12.2025",
-    "minuten": 50,
-    "inhalt": "addiere test"
+    "datum": "02.01.2026",
+    "minuten": 10,
+    "inhalt": "yes"
   },
   {
-    "modul": "1.4.4",
-    "datum": "26.12.2025",
-    "minuten": 4,
-    "inhalt": "nochmal test testen\r\nlala"
-  },
-  {
-    "modul": "1.2.2",
-    "datum": "26.12.2025",
-    "minuten": 80,
-    "inhalt": "ha"
-  },
-  {
+    "username": "wert",
     "modul": "1.5.1 SA",
-    "datum": "26.12.2025",
-    "minuten": 120,
-    "inhalt": "weihnacht"
+    "datum": "02.01.2026",
+    "minuten": 45,
+    "inhalt": "JAAAAAAA JETZT FUNKTIONIERTS!!!!!!!!"
   },
   {
+    "username": "asdf",
     "modul": "1.5.1 SA",
-    "datum": "13.12.2025",
-    "minuten": 180,
-    "inhalt": "nana"
+    "datum": "02.01.2026",
+    "minuten": 45,
+    "inhalt": "dadadada"
   },
   {
-    "modul": "ü",
-    "datum": "ü",
-    "minuten": 1,
-    "inhalt": "jetzt gehts üöäöüäöüä"
-  },
-  {
-    "modul": "ö",
-    "datum": "ö",
-    "minuten": 9,
-    "inhalt": "ö"
-  },
-  {
-    "modul": "ä",
-    "datum": "ä",
-    "minuten": 0,
-    "inhalt": "ä"
-  },
-  {
-    "modul": "äöäüüöäüöääüö",
-    "datum": "üäö",
-    "minuten": 243546,
-    "inhalt": "äüöööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööööö"
-  },
-  {
-    "modul": "äöü",
-    "datum": "üöüä",
-    "minuten": 12,
-    "inhalt": "äöüäüöüäüöäüöüäö"
-  },
-  {
-    "modul": "44",
-    "datum": "44.44.4444",
-    "minuten": 44,
-    "inhalt": "4"
-  },
-  {
-    "modul": "1.1.2",
-    "datum": null,
-    "minuten": 120,
-    "inhalt": "Projekt"
-  },
-  {
-    "modul": "1.1.2",
-    "datum": null,
-    "minuten": 120,
-    "inhalt": "Projekt"
-  },
-  {
+    "username": null,
     "modul": "1.5.1 SA",
-    "datum": "10.12.2025",
-    "minuten": 120,
-    "inhalt": "xyxyxyxyxy"
+    "datum": "02.01.2026",
+    "minuten": 45,
+    "inhalt": "nochmal???\r\n"
   },
   {
-    "modul": "z",
-    "datum": "z",
-    "minuten": 1,
-    "inhalt": "sdfg\r\ndfghjk\r\n"
+    "username": null,
+    "modul": "1.5.1 SA",
+    "datum": "02.01.2026",
+    "minuten": 45,
+    "inhalt": "..."
+  },
+  {
+    "username": "Cai_Lucy",
+    "modul": "1.5.1 SA",
+    "datum": "02.01.2026",
+    "minuten": 45,
+    "inhalt": "jeder user soll nur seine eigenen berichte sehen."
   }
 ]

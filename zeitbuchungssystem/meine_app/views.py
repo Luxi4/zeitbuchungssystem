@@ -28,7 +28,11 @@ def register(request):
         users.append(new_user)
         save_users(users)
 
-        return redirect("success")
+        #benutzer nach registrierung automatisch einloggen
+        request.session["username"] = username
+        request.session["user_email"] = email
+
+        return redirect("arbeitsberichte")
     
     return render(request, "meine_app/register.html")
 
@@ -60,7 +64,8 @@ def logout_view(request):
     return redirect("home")
 
 
-#arbeitsberichte
+
+#ARBEITSBERICHTE
 def arbeitsberichte_view(request):
     berichte = lade_berichte()
 
@@ -71,16 +76,27 @@ def arbeitsberichte_view(request):
         inhalt = request.POST.get("inhalt")
 
         if minuten and modul and inhalt:
-            neuer_bericht = Arbeitsberichte(modul, datum, minuten, inhalt)
+            username = request.session.get("username")
+
+            neuer_bericht = Arbeitsberichte(username=username, modul=modul, datum=datum, minuten=minuten, inhalt=inhalt)
+            
             berichte.insert(0, neuer_bericht.to_dict())
             speichere_berichte(berichte)
+
         return redirect("arbeitsberichte")
 
-    return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": berichte})
+    username = request.session.get("username")
+    eigene_berichte = []
+    for b in berichte:
+        if b["username"] == username:
+            eigene_berichte.append(b)
+    
+    return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": eigene_berichte})
 
 
 def gesamtübersicht(request):
-    daten = prozentanteile()
+    username = request.session["username"]
+    daten = prozentanteile(username)
     return render(request, "meine_app/gesamtübersicht.html", {"daten": daten})
 
 
