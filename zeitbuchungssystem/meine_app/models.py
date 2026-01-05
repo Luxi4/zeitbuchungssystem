@@ -7,11 +7,12 @@ pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
 
 
 class UserData:
-    def __init__(self, username, email, password, role="einfach"):
+    def __init__(self, username, email, password, role="einfach", vip_request=False):
         self.username = username
         self.email = email
         self.password = password
         self.role = role
+        self.vip_request = vip_request
 
     def to_dict(self):
         return {
@@ -19,6 +20,7 @@ class UserData:
             "email": self.email,
             "password": self.password,
             "role": self.role,
+            "vip_request": self.vip_request,
         }
 
     @classmethod
@@ -28,6 +30,7 @@ class UserData:
             email=data.get("email"),
             password=data.get("password"),
             role=data.get("role", "einfach"),
+            vip_request=data.get("vip_request", False)
         )
 
 def load_users():

@@ -1,0 +1,12 @@
+
+<h2>Offene VIP-Anträge</h2>
+
+{% for req in requests %}
+    <p>{{ req.email }}</p>
+    <form action="{% url 'genehmige_vip' req.email %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Genehmigen</button>
+    </form>
+{% empty %}
+    <p>Keine offenen Anträge.</p>
+{% endfor %}

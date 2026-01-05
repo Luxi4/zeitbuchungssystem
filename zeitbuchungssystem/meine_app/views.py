@@ -10,7 +10,7 @@ from django.http import JsonResponse
 def home(request):
     return render(request, "meine_app/home.html")
 
-#registrierung
+#REGISTRIERUNG
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -39,7 +39,7 @@ def register(request):
 def success(request):
     return render(request, "meine_app/success.html")
 
-#login
+#LOGIN
 def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -58,7 +58,7 @@ def login_view(request):
     
     return render(request, "meine_app/login.html")
 
-#logout
+#LOGOUT
 def logout_view(request):
     request.session.flush() #löscht alle session-daten
     return redirect("home")
@@ -67,6 +67,17 @@ def logout_view(request):
 
 #ARBEITSBERICHTE
 def arbeitsberichte_view(request):
+    email = request.session.get("user_email")
+    users = load_users()
+
+    #zuerst user finden
+    user = None
+    for u in users:
+        if u.email == email:
+            user = u
+            break
+
+    
     berichte = lade_berichte()
 
     if request.method == "POST":
@@ -91,9 +102,66 @@ def arbeitsberichte_view(request):
         if b["username"] == username:
             eigene_berichte.append(b)
     
-    return render(request, "meine_app/arbeitsberichte.html", {"arbeitsberichte": eigene_berichte})
+    return render(request, "meine_app/arbeitsberichte.html", {
+        "arbeitsberichte": eigene_berichte,
+        "role": user.role,
+        "user": user
+        })
 
 
+#ANFRAGEN
+def bestätige_vip(request):
+    return render(request, "meine_app/bestätige_vip.html")
+
+
+def request_vip(request):
+    email = request.session.get("user_email")
+    users = load_users()
+
+    for u in users:
+        if u.email == email:
+            u.vip_request = True
+            break
+    
+    save_users(users)
+
+    return redirect("arbeitsberichte")
+
+
+#VIP BEANTRAGEN
+def admin_vip_list(request):
+    users = load_users()
+
+    offene = []
+    for u in users:
+        if u.vip_request:
+            offene.append(u)
+
+    return render(request, "meine_app/admin_vip_list.html", {
+        "requests": offene
+    })
+
+def admin_user_list(request):
+    users = load_users()
+    return render(request, "meine_app/admin_user_list.html", {"users": users})
+
+
+#VIP GENEHMIGEN
+def genehmige_vip(request, email):
+    users = load_users()
+
+    for u in users:
+        if u.email == email:
+            u.role = "vip"
+            u.vip_request = False
+            break
+    
+    save_users(users)
+    return redirect("admin_vip_list")
+
+
+
+#GESAMTÜBERSICHT
 def gesamtübersicht(request):
     username = request.session["username"]
     daten = prozentanteile(username)

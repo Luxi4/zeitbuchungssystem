@@ -1,80 +1,16 @@
 [
     {
+        "username": "admin",
+        "email": "admin@mail.de",
+        "password": "adminpass123",
+        "role": "admin",
+        "vip_request": false
+    },
+    {
         "username": "Cai_Lucy",
         "email": "Cai_Lucy@teams.hs-ludwigsburg.de",
-        "password": "8characters",
-        "role": "einfach"
-    },
-    {
-        "username": "test",
-        "email": "test1@teams.hs-ludwigsburg.de",
-        "password": "8characters",
-        "role": "einfach"
-    },
-    {
-        "username": "test",
-        "email": "test2@teams.hs-ludwigsburg.de",
-        "password": "8characters",
-        "role": "einfach"
-    },
-    {
-        "username": "test",
-        "email": "test3@teams.hs-ludwigsburg.de",
-        "password": "8characters",
-        "role": "einfach"
-    },
-    {
-        "username": "abc",
-        "email": "123@321",
-        "password": "asdfghjklöä",
-        "role": "einfach"
-    },
-    {
-        "username": "benutz",
-        "email": "email@mail",
-        "password": "pwpwpwpwpwpw",
-        "role": "einfach"
-    },
-    {
-        "username": "schreibrechte",
-        "email": "schreibrechte@gmail",
-        "password": "schreibrechteeben",
-        "role": "einfach"
-    },
-    {
-        "username": "weihnacht",
-        "email": "weihnacht@mail.de",
-        "password": "weihnachtenistfastrum",
-        "role": "einfach"
-    },
-    {
-        "username": "register",
-        "email": "reg@mail.de",
-        "password": "blabliblubb",
-        "role": "einfach"
-    },
-    {
-        "username": "neujahr",
-        "email": "neujahr@mail.de",
-        "password": "frohesneues",
-        "role": "einfach"
-    },
-    {
-        "username": "heilig",
-        "email": "heilig@gmail.de",
-        "password": "heiliger",
-        "role": "einfach"
-    },
-    {
-        "username": "asdf",
-        "email": "asdf@mail.de",
-        "password": "asdfasdf",
-        "role": "einfach"
-    },
-    {
-        "username": "wert",
-        "email": "wert@gmail.com",
-        "password": "wert1234",
-        "role": "einfach"
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": true
     }
 ]
