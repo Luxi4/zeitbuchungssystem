@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from .models import UserData, load_users, save_users
 from .models import Arbeitsberichte, lade_berichte, speichere_berichte
 from .models import zeit_pro_modul, pfad_arbeitsberichte, prozentanteile
-
+from django.http import HttpResponse
 import json
+
 from pathlib import Path
 from django.http import JsonResponse
 
@@ -77,6 +78,9 @@ def arbeitsberichte_view(request):
             user = u
             break
 
+    if user is None:
+        return redirect("login")
+
     
     berichte = lade_berichte()
 
@@ -86,7 +90,7 @@ def arbeitsberichte_view(request):
         minuten = int(request.POST.get("minuten"))
         inhalt = request.POST.get("inhalt")
 
-        if minuten and modul and inhalt:
+        if minuten and modul and inhalt is not None:
             username = request.session.get("username")
 
             neuer_bericht = Arbeitsberichte(username=username, modul=modul, datum=datum, minuten=minuten, inhalt=inhalt)
@@ -109,44 +113,70 @@ def arbeitsberichte_view(request):
         })
 
 
-#ANFRAGEN
-def bestätige_vip(request):
-    return render(request, "meine_app/bestätige_vip.html")
 
-
+#VIP ANFRAGEN
 def request_vip(request):
     email = request.session.get("user_email")
     users = load_users()
 
     for u in users:
         if u.email == email:
+            if u.role != "einfach":
+                return redirect("arbeitsberichte")
             u.vip_request = True
             break
     
     save_users(users)
-
     return redirect("arbeitsberichte")
 
+#einf. anw. bestätigt anfrage:
+def bestätige_vip(request):
+    return render(request, "meine_app/bestätige_vip.html")
 
-#VIP BEANTRAGEN
-def admin_vip_list(request):
+#ADMIN ANFRAGEN
+def request_admin(request):
+    email = request.session.get("user_email")
     users = load_users()
 
+    for u in users:
+        if u.email == email:
+            if u.role != "vip":
+                return redirect("arbeitsberichte")
+            u.admin_request = True
+            break
+    
+    save_users(users)
+    return redirect("arbeitsberichte")
+
+#vip bestätigt anfrage:
+def bestätige_admin(request):
+    return render(request, "meine_app/bestätige_admin.html")
+
+
+#ADMIN: liste aller anfragen
+def admin_request_list(request):
+    email = request.session.get("user_email")
+    users = load_users()
+
+    #1. aktuellen user
+    aktueller_user = None
+    for u in users:
+        if u.email == email:
+            aktueller_user = u
+            break
+    #2. prüfen ob admin
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("arbeitsberichte")
+    #3. alle offenen anträge
     offene = []
     for u in users:
-        if u.vip_request:
+        if u.vip_request or u.admin_request:
             offene.append(u)
 
-    return render(request, "meine_app/admin_vip_list.html", {
+    return render(request, "meine_app/admin_request_list.html", {
         "requests": offene
     })
 
-def admin_user_list(request):
-    users = load_users()
-    return render(request, "meine_app/admin_user_list.html", {"users": users})
-
-
-#VIP GENEHMIGEN
 def genehmige_vip(request, email):
     users = load_users()
 
@@ -157,15 +187,39 @@ def genehmige_vip(request, email):
             break
     
     save_users(users)
-    return redirect("admin_vip_list")
+    return redirect("admin_request_list")
+
+def genehmige_admin(request, email):
+    users = load_users()
+
+    for u in users:
+        if u.email == email:
+            u.role = "admin"
+            u.admin_request = False
+            break
+    
+    save_users(users)
+    return redirect("admin_request_list")
+
+
+def admin_user_list(request):
+    users = load_users()
+    return render(request, "meine_app/admin_user_list.html", {"users": users})
 
 
 
 #GESAMTÜBERSICHT
 def gesamtübersicht(request):
     username = request.session["username"]
+    if not username:
+        return redirect("login")
     daten = prozentanteile(username)
     return render(request, "meine_app/gesamtübersicht.html", {"daten": daten})
+
+
+
+#DOWNLOADS
+
 
 
 '''

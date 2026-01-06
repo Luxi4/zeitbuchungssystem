@@ -4,13 +4,15 @@
         "email": "admin@mail.de",
         "password": "adminpass123",
         "role": "admin",
-        "vip_request": false
+        "vip_request": false,
+        "admin_request": false
     },
     {
         "username": "Cai_Lucy",
         "email": "Cai_Lucy@teams.hs-ludwigsburg.de",
         "password": "passwort",
         "role": "vip",
-        "vip_request": false
+        "vip_request": false,
+        "admin_request": true
     }
 ]

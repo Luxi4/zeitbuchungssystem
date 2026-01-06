@@ -1,0 +1,36 @@
+
+<h2>Offene Anträge</h2>
+
+<table>
+    <tr>
+        <th>E-Mail</th>
+        <th>Art des Antrags</th>
+        <th>Aktion</th>
+    </tr>
+
+    {% for u in requests %}
+    <tr>
+        <td>{{ u.email }}</td>
+
+        <td>
+            {% if u.vip_request %} VIP-Antrag {% endif %}
+            {% if u.admin_request %} Admin-Antrag {% endif %}
+        </td>
+
+        <td>
+            {% if u.vip_request %}
+                <a href="{% url 'genehmige_vip' u.email %}">VIP genehmigen</a>
+            {% endif %}
+
+            {% if u.admin_request %}
+                <a href="{% url 'genehmige_admin' u.email %}">Admin genehmigen</a>
+            {% endif %}
+        </td>
+    </tr>
+
+    {% empty %}
+    <tr>
+        <td colspan="3">Keine offenen Anträge.</td>
+    </tr>
+    {% endfor %}
+</table>

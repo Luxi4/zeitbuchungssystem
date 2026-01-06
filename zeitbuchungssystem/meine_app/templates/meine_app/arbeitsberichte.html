@@ -19,17 +19,16 @@
             {% endif %}
 
             {% if role == "vip" %}
-            <!--<form action="{% url 'request_admin' %}" method="post">
+            <form action="{% url 'request_admin' %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Admin beantragen</button>
-                </form>-->
-                <a href="{% url 'download_data' %}">Daten herunterladen</a>
-                <a href="{% url 'upload_data' %}">Daten hochladen</a>
+            </form>
+                
             {% endif %}
 
             {% if role == "admin" %}
                 <strong>Admin-Bereich</strong>
-                <a href="{% url 'admin_vip_list' %}">VIP-Anträge ansehen</a>
+                <a href="{% url 'admin_request_list' %}">VIP-Anträge ansehen</a>
                 <a href="{% url 'admin_user_list' %}">Benutzer verwalten</a>
             {% endif %}
 
