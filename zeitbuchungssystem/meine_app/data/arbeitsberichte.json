@@ -1,12 +1,5 @@
 [
   {
-    "username": "Cai_Lucy",
-    "modul": "1.5.1 SA",
-    "datum": "05.01.2026",
-    "minuten": 10,
-    "inhalt": "tada"
-  },
-  {
     "username": "wert",
     "modul": "1.1.2 Inf",
     "datum": "02.01.2026",
@@ -51,8 +44,22 @@
   {
     "username": "Cai_Lucy",
     "modul": "1.5.1 SA",
+    "datum": "05.01.2026",
+    "minuten": 10,
+    "inhalt": "tada"
+  },
+  {
+    "username": "Cai_Lucy",
+    "modul": "1.5.1 SA",
     "datum": "02.01.2026",
     "minuten": 45,
     "inhalt": "jeder user soll nur seine eigenen berichte sehen."
+  },
+  {
+    "username": "Cai_Lucy",
+    "modul": "1.3.1 Sys",
+    "datum": "06.01.2026",
+    "minuten": 60,
+    "inhalt": "download und upload für vip"
   }
 ]

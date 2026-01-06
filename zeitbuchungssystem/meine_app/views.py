@@ -231,7 +231,7 @@ def download_json(request):
     text = json.dumps(eigene, indent=4, ensure_ascii=False)
 
     response = HttpResponse(text, content_type="application(json")
-    response["Content-Disposition"] = 'attachment; filename="beriche.json"'
+    response["Content-Disposition"] = 'attachment; filename="berichte.json"'
     return response
 
 def download_csv(request):
@@ -263,12 +263,12 @@ def download_xml(request):
     text = "<arbeitsberichte>\n"
 
     for b in eigene:
-        text += " <bericht>\n"
-        text += f" <modul>{b['modul']}</modul>\n"
-        text += f" <datum>{b['datum']}</datum>\n"
-        text += f" <minuten>{b['minuten']}</minuten>\n"
-        text += f" <inhalt>{b['inhalt']}</inhalt>\n"
-        text += " </bericht>\n"
+        text += "  <bericht>\n"
+        text += f"    <modul>{b['modul']}</modul>\n"
+        text += f"    <datum>{b['datum']}</datum>\n"
+        text += f"    <minuten>{b['minuten']}</minuten>\n"
+        text += f"    <inhalt>{b['inhalt']}</inhalt>\n"
+        text += "  </bericht>\n"
 
     text += "</arbeitsberichte>"
 
@@ -336,7 +336,7 @@ def upload_data(request):
     alle = neue_liste
 
     speichere_berichte(alle)
-    
+
     return redirect("arbeitsberichte")
 
 
