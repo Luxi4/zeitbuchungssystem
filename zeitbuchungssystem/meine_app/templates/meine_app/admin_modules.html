@@ -1,0 +1,11 @@
+<h2>Module festlegen</h2>
+
+<form method="post" action="{% url 'admin_modules' %}">
+    {% csrf_token %}
+
+    <label for="module">Module (je Zeile eines):</label><br>
+    <textarea id="module" name="module" rows="8" cols="40">{{ modules_text }}</textarea>
+
+    <br><br>
+    <button type="submit">Speichern</button>
+</form>

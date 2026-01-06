@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import UserData, load_users, save_users
 from .models import Arbeitsberichte, lade_berichte, speichere_berichte
 from .models import zeit_pro_modul, pfad_arbeitsberichte, prozentanteile
+from .models import load_modules, save_modules
 from django.http import HttpResponse
 import json
 
@@ -83,7 +84,7 @@ def arbeitsberichte_view(request):
 
     
     berichte = lade_berichte()
-
+    #bericht speichern
     if request.method == "POST":
         modul = request.POST.get("modul")
         datum = request.POST.get("datum")
@@ -93,23 +94,34 @@ def arbeitsberichte_view(request):
         if minuten and modul and inhalt is not None:
             username = request.session.get("username")
 
-            neuer_bericht = Arbeitsberichte(username=username, modul=modul, datum=datum, minuten=minuten, inhalt=inhalt)
+            neuer_bericht = Arbeitsberichte(
+                username=username,
+                modul=modul,
+                datum=datum,
+                minuten=minuten,
+                inhalt=inhalt
+            )
             
             berichte.insert(0, neuer_bericht.to_dict())
             speichere_berichte(berichte)
 
         return redirect("arbeitsberichte")
 
+    #nur eigenen berichte angezeigt
     username = request.session.get("username")
     eigene_berichte = []
     for b in berichte:
         if b["username"] == username:
             eigene_berichte.append(b)
     
+    #module laden
+    modules = load_modules()
+
     return render(request, "meine_app/arbeitsberichte.html", {
         "arbeitsberichte": eigene_berichte,
         "role": user.role,
-        "user": user
+        "user": user,
+        "modules": modules
         })
 
 
@@ -205,6 +217,32 @@ def genehmige_admin(request, email):
 def admin_user_list(request):
     users = load_users()
     return render(request, "meine_app/admin_user_list.html", {"users": users})
+
+#admin: module festlegen
+def admin_modules(request):
+    if request.method == "POST":
+        text = request.POST.get("module")
+
+        if not text:
+            return redirect("admin_modules")
+        
+        modules_list = []
+        for m in text.split("\n"):
+            m = m.strip()
+            if m:
+                modules_list.append(m)
+
+        save_modules(modules_list)
+        return redirect("admin_modules")
+    
+    modules = load_modules()
+    modules_text = ""
+    for m in modules:
+        modules_text += m + "\n"
+
+    return render(request, "meine_app/admin_modules.html", {
+        "modules_text": modules_text
+    })
 
 
 

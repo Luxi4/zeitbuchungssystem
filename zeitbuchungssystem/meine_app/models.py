@@ -4,6 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 pfad_users = BASE_DIR / "data" / "userdata.json"
 pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
+pfad_modules = BASE_DIR / "data" / "modules.json"
 
 
 class UserData:
@@ -121,3 +122,21 @@ def prozentanteile(username):
         ergebnis.append(eintrag)
     
     return ergebnis
+
+
+
+#ADMIN
+def load_modules():
+    try:
+        with open(pfad_modules, "r") as f:
+            data = json.load(f)
+            return data.get("modules", [])
+    except FileNotFoundError:
+        return []
+
+
+def save_modules(modules_list):
+    data = {"modules": modules_list}
+    with open(pfad_modules, "w") as f:
+        json.dump(data, f, indent=4)
+

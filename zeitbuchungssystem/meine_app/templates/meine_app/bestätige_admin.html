@@ -1,0 +1,9 @@
+<h2>Admin beantragen</h2>
+<p>Möchtest du wirklich Admin werden?</p>
+
+<form action="{% url 'request_admin' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Ja, beantragen</button>
+</form>
+
+<a href="{% url 'arbeitsberichte' %}">Nein, zurück</a>

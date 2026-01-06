@@ -19,7 +19,7 @@
             {% endif %}
 
             {% if role == "vip" %}
-            <form action="{% url 'request_admin' %}" method="post">
+            <form action="{% url 'bestätige_admin' %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Admin beantragen</button>
             </form>
@@ -27,7 +27,7 @@
 
             {% if role == "admin" %}
                 <strong>Admin-Bereich</strong>
-                <a href="{% url 'admin_request_list' %}">VIP-Anträge ansehen</a>
+                <a href="{% url 'admin_request_list' %}">Anträge ansehen</a>
                 <a href="{% url 'admin_user_list' %}">Benutzer verwalten</a>
             {% endif %}
 
@@ -59,7 +59,11 @@
         <form method="post">
             {% csrf_token %}
             <label for="modul">Modul:</label>
-            <input type="text" id="modul" name="modul" required>
+            <select name="modul">
+                {% for m in modules %}
+                    <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
 
             <label for="datum">Datum:</label>
             <input type="text" id="datum" name="datum" required>

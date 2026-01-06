@@ -12,11 +12,13 @@ urlpatterns = [
     
     path("bestätige_vip/", views.bestätige_vip, name="bestätige_vip"),
     path("request_vip/", views.request_vip, name="request_vip"),
-    path("admin/vip/genehmige/<str:email>/", views.genehmige_vip, name="genehmige_vip"),
+    path("genehmige/vip/<str:email>/", views.genehmige_vip, name="genehmige_vip"),
+    path("bestätige_admin/", views.bestätige_admin, name="bestätige_admin"),
+    path("request_admin/", views.request_admin, name="request_admin"),
     path("genehmige/admin/<str:email>/", views.genehmige_admin, name="genehmige_admin"),
     path("admin/request-list/", views.admin_request_list, name="admin_request_list"),
     path("admin/user-list", views.admin_user_list, name="admin_user_list"),
-    path("request_admin/", views.request_admin, name="request_admin"),
+    path("admin_modules/", views.admin_modules, name="admin_modules"),
 
     path("download/json/", views.download_json, name="download_json"),
     path("download/csv/", views.download_csv, name="download_csv"),
