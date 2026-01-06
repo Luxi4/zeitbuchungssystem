@@ -23,7 +23,15 @@
                 {% csrf_token %}
                 <button type="submit">Admin beantragen</button>
             </form>
-                
+
+            <a href="{% url 'download_json' %}">JSON herunterladen</a>
+            <a href="{% url 'download_csv' %}">CSV herunterladen</a>
+            <a href="{% url 'download_xml' %}">XML herunterladen</a>
+            <form action="{% url 'upload_data' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="datei" required>
+                <button type="submit">Daten hochladen</button>
+            </form>
             {% endif %}
 
             {% if role == "admin" %}

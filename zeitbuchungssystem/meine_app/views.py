@@ -219,6 +219,125 @@ def gesamtübersicht(request):
 
 
 #DOWNLOADS
+def download_json(request):
+    username = request.session.get("username")
+    berichte = lade_berichte()
+
+    eigene = []
+    for b in berichte:
+        if b["username"] == username:
+            eigene.append(b)
+    
+    text = json.dumps(eigene, indent=4, ensure_ascii=False)
+
+    response = HttpResponse(text, content_type="application(json")
+    response["Content-Disposition"] = 'attachment; filename="beriche.json"'
+    return response
+
+def download_csv(request):
+    username = request.session.get("username")
+    berichte = lade_berichte()
+
+    eigene = []
+    for b in berichte:
+        if b["username"] == username:
+            eigene.append(b)
+    
+    text = "modul,datum,minuten,inhalt\n"
+    for b in eigene:
+        text += f"{b['modul']}, {b['datum']}, {b['minuten']}, {b['inhalt']}\n"
+
+    response = HttpResponse(text, content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="berichte.csv"'
+    return response
+
+def download_xml(request):
+    username = request.session.get("username")
+    berichte = lade_berichte()
+
+    eigene = []
+    for b in berichte:
+        if b["username"] == username:
+            eigene.append(b)
+    
+    text = "<arbeitsberichte>\n"
+
+    for b in eigene:
+        text += " <bericht>\n"
+        text += f" <modul>{b['modul']}</modul>\n"
+        text += f" <datum>{b['datum']}</datum>\n"
+        text += f" <minuten>{b['minuten']}</minuten>\n"
+        text += f" <inhalt>{b['inhalt']}</inhalt>\n"
+        text += " </bericht>\n"
+
+    text += "</arbeitsberichte>"
+
+    response = HttpResponse(text, content_type="application/xml")
+    response["Content-Disposition"] = 'attachment; filename="berichte.xml"'
+    return response
+
+#UPLOAD 
+def upload_data(request):
+    if request.method != "POST":
+        return redirect("arbeitsberichte")
+    
+    datei = request.FILES.get("datei")
+    if not datei:
+        return redirect("arbeitsberichte")
+    
+    username = request.session.get("username")
+    alle = lade_berichte()
+
+    #JSON
+    if datei.name.endswith(".json"):
+        neue = json.load(datei)
+    #CSV
+    elif datei.name.endwith(".csv"):
+        neue = []
+        lines = datei.read().decode("utf-8").splitlines()
+
+        for line in lines[1:]:
+            modul, datum, minuten, inhalt = line.split(",")
+
+            neue.append({
+                "username": username,
+                "modul": modul,
+                "datum": datum,
+                "minuten": int(minuten),
+                "inhalt": inhalt
+            })
+    elif datei.name.endwith(".xml"):
+        neue = []
+        text = datei.read().decode("utf-8")
+
+        einträge = text.split("<bericht>")[1:]
+        for e in einträge:
+            modul = e.split("<modul>")[1].split("</modul>")[0]
+            datum = e.split("<datum>")[1].split("</datum>")[0]
+            minuten = e.split("<minuten>")[1].split("</minuten>")[0]
+            inhalt = e.split("<inhalt>")[1].split("</inhalt>")[0]
+
+            neue.append({
+                "username": username,
+                "modul": modul,
+                "datum": datum,
+                "minuten": int(minuten),
+                "inahlt": inhalt
+            })
+    
+    neue_liste = []
+    for b in alle:
+        if b["username"] != username:
+            neue_liste.append(b)
+    
+    for b in neue:
+        neue_liste.append(b)
+
+    alle = neue_liste
+
+    speichere_berichte(alle)
+    
+    return redirect("arbeitsberichte")
 
 
 
