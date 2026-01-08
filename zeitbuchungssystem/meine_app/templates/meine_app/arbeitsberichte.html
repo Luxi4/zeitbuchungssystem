@@ -29,6 +29,7 @@
                 <strong>Admin-Bereich</strong>
                 <a href="{% url 'admin_request_list' %}">Anträge ansehen</a>
                 <a href="{% url 'admin_user_list' %}">Benutzer verwalten</a>
+                <a href="{% url 'admin_modules' %}">Module verwalten</a>
             {% endif %}
 
             {% if request.session.user_email %}

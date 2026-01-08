@@ -26,7 +26,20 @@ def register(request):
             if u.email == email:
                 return render(request, "meine_app/register.html", {"error": "E-Mail ist bereits registriert!"})
 
-        new_user = UserData(username, email, password, role="einfach")
+        if users:
+            new_id = users[-1].id + 1
+        else:
+            new_id = 1
+
+        new_user = UserData(
+            username=username,
+            email=email,
+            password=password,
+            role="einfach",
+            user_id=new_id,
+            is_active=True
+        )
+
         users.append(new_user)
         save_users(users)
 
@@ -51,9 +64,14 @@ def login_view(request):
 
         for u in users:
             if u.email == email and u.password == password:
+                
+                if u.is_active == False:
+                    return render(request, "meine_app/login.html", {
+                        "error": "Benutzer ist gesperrt! Wende dich an einen Administrator."
+                    })
+                
                 request.session["user_email"] = u.email
                 request.session["username"] = u.username
-        
                 return redirect("arbeitsberichte")
         
         return render(request, "meine_app/login.html", {"error": "Login fehlgeschlagen!"})
@@ -233,7 +251,7 @@ def admin_modules(request):
                 modules_list.append(m)
 
         save_modules(modules_list)
-        return redirect("admin_modules")
+        return redirect("arbeitsberichte")
     
     modules = load_modules()
     modules_text = ""
@@ -243,6 +261,28 @@ def admin_modules(request):
     return render(request, "meine_app/admin_modules.html", {
         "modules_text": modules_text
     })
+
+#admin: user sperren
+def user_sperren(request, user_id):
+    users = load_users()
+
+    for u in users:
+        if u.id == user_id:
+            u.is_active = False
+    
+    save_users(users)
+    return redirect("admin_user_list")
+
+#admin: user entsperren
+def user_entsperren(request, user_id):
+    users = load_users()
+
+    for u in users:
+        if u.id == user_id:
+            u.is_active = True
+    
+    save_users(users)
+    return redirect("admin_user_list")
 
 
 

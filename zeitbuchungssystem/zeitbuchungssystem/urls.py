@@ -18,8 +18,10 @@ urlpatterns = [
     path("genehmige/admin/<str:email>/", views.genehmige_admin, name="genehmige_admin"),
     path("admin/request-list/", views.admin_request_list, name="admin_request_list"),
     path("admin/user-list", views.admin_user_list, name="admin_user_list"),
+    path('admin/user/<int:user_id>/sperren/', views.user_sperren, name='user_sperren'),
+    path('admin/user/<int:user_id>/entsperren/', views.user_entsperren, name='user_entsperren'),
     path("admin_modules/", views.admin_modules, name="admin_modules"),
-
+    
     path("download/json/", views.download_json, name="download_json"),
     path("download/csv/", views.download_csv, name="download_csv"),
     path("download/xml/", views.download_xml, name="download_xml"),

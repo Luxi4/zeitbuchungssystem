@@ -5,6 +5,8 @@
         <th>Username</th>
         <th>Email</th>
         <th>Rolle</th>
+        <th>Status</th>
+        <th>Aktion</th>
     </tr>
 
     {% for u in users %}
@@ -12,6 +14,22 @@
         <td>{{ u.username }}</td>
         <td>{{ u.email }}</td>
         <td>{{ u.role }}</td>
+
+        <td>
+            {% if u.is_active %}
+                Aktiv
+            {% else %}
+                Gesperrt
+            {% endif %}
+        </td>
+
+        <td>
+            {% if u.is_active %}
+                <a href="{% url 'user_sperren' u.id %}">Sperren</a>
+            {% else %}
+                <a href="{% url 'user_entsperren' u.id %}">Entsperren</a>
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>
