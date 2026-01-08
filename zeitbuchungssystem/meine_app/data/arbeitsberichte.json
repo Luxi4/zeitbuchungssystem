@@ -1,5 +1,12 @@
 [
   {
+    "username": "Cai_Lucy",
+    "modul": "1.1.2",
+    "datum": "08.01.2026",
+    "minuten": 80,
+    "inhalt": "admin kann jetzt user sperren und entsperren!"
+  },
+  {
     "username": "wert",
     "modul": "1.1.2 Inf",
     "datum": "02.01.2026",
