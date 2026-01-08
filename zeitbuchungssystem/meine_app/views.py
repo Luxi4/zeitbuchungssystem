@@ -417,17 +417,3 @@ def upload_data(request):
 
     return redirect("arbeitsberichte")
 
-
-
-'''
-#Aufg. json &/ csv Datenquelle online stellen & link teilen
-def online_datenquelle(request):
-
-    BASE_DIR = Path(__file__).resolve().parent
-    json_path = BASE_DIR / "data" / "userdata.json"
-
-    with open(json_path, "r") as f:
-        data = json.load(f)
-
-    return JsonResponse({"users": data})
-'''

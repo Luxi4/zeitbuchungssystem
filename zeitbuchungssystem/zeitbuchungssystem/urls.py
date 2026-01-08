@@ -27,6 +27,4 @@ urlpatterns = [
     path("download/xml/", views.download_xml, name="download_xml"),
     path("upload/", views.upload_data, name="upload_data"),
 
-
-    #path("datenquelle/", views.online_datenquelle),
 ]
