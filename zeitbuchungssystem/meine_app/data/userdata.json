@@ -18,5 +18,85 @@
         "vip_request": false,
         "admin_request": false,
         "is_active": true
+    },
+    {
+        "id": 3,
+        "username": "Ari_Lune",
+        "email": "ari.lune@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 4,
+        "username": "Niva_Sol",
+        "email": "niva.sol@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 5,
+        "username": "Sira_Vale",
+        "email": "sira.vale@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 6,
+        "username": "Leni_Roa",
+        "email": "leni.roa@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 7,
+        "username": "Maro_Ely",
+        "email": "maro.ely@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 8,
+        "username": "Tiva_Noor",
+        "email": "tiva.noor@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 9,
+        "username": "Mira_Sone",
+        "email": "mira.sone@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
+    },
+    {
+        "id": 10,
+        "username": "Rani_Ovel",
+        "email": "rani.ovel@mail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
     }
 ]

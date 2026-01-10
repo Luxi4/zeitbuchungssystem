@@ -1,5 +1,26 @@
 [
   {
+    "username": "Rani_Ovel",
+    "modul": "1.1.2",
+    "datum": "10.01.2026",
+    "minuten": 160,
+    "inhalt": "Lernen für Klausur"
+  },
+  {
+    "username": "Tiva_Noor",
+    "modul": "1.3.1",
+    "datum": "10.01.2026",
+    "minuten": 10,
+    "inhalt": "testweise namen eingetragen"
+  },
+  {
+    "username": "Ari_Lune",
+    "modul": "1.1.2",
+    "datum": "10.01.2026",
+    "minuten": 40,
+    "inhalt": "Registrierung"
+  },
+  {
     "username": "Cai_Lucy",
     "modul": "1.1.2",
     "datum": "08.01.2026",

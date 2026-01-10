@@ -14,16 +14,6 @@
             </div>
 
             <div class="header-right">
-            {% if role == "einfach" %}
-            <a href="{% url 'bestätige_vip' %}">VIP beantragen</a>
-            {% endif %}
-
-            {% if role == "vip" %}
-            <form action="{% url 'bestätige_admin' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Admin beantragen</button>
-            </form>
-            {% endif %}
 
             {% if role == "admin" %}
                 <strong>Admin-Bereich</strong>
@@ -33,6 +23,19 @@
             {% endif %}
 
             {% if request.session.user_email %}
+                <a href="{% url 'gesamtübersicht' %}">Gesamtübersicht</a>
+                
+                {% if role == "einfach" %}
+                    <a href="{% url 'bestätige_vip' %}">VIP beantragen</a>
+                {% endif %}
+
+                {% if role == "vip" %}
+                    <form action="{% url 'bestätige_admin' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Admin beantragen</button>
+                    </form>
+                {% endif %}
+
                 <a href="{% url 'logout' %}" class="logout-button">Logout</a>
             {% endif %}
             </div>
