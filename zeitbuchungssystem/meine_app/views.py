@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from pathlib import Path
-from django.http import JsonResponse
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -96,10 +95,8 @@ def register(request):
         save_users(users)
 
         #benutzer nach registrierung automatisch einloggen
-        request.session["username"] = username
-        request.session["user_email"] = email
 
-        return redirect("arbeitsberichte")
+        return redirect(f"/arbeitsberichte?user_id={new_id}")
     
     return render(request, "meine_app/register.html")
 
@@ -122,9 +119,7 @@ def login_view(request):
                         "error": "Benutzer ist gesperrt! Wende dich an einen Administrator."
                     })
                 
-                request.session["user_email"] = u.email
-                request.session["username"] = u.username
-                return redirect("arbeitsberichte")
+                return redirect(f"/arbeitsberichte?user_id={u.id}")
         
         return render(request, "meine_app/login.html", {"error": "Login fehlgeschlagen!"})
     
@@ -132,7 +127,6 @@ def login_view(request):
 
 #LOGOUT
 def logout_view(request):
-    request.session.flush() #löscht alle session-daten
     return redirect("home")
 
 
@@ -170,22 +164,22 @@ def speichere_berichte(berichte):
 
 
 def arbeitsberichte_view(request):
-    email = request.session.get("user_email")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
-
-    #zuerst user finden
     user = None
     for u in users:
-        if u.email == email:
+        if str(u.id) == user_id:
             user = u
             break
 
-    if user is None:
+    if not user:
         return redirect("login")
-
     
     berichte = lade_berichte()
-    #bericht speichern
+    #neuen bericht speichern
     if request.method == "POST":
         modul = request.POST.get("modul")
         datum = request.POST.get("datum")
@@ -193,7 +187,10 @@ def arbeitsberichte_view(request):
         inhalt = request.POST.get("inhalt")
 
         if minuten and modul and inhalt is not None:
-            username = request.session.get("username")
+            try:
+                minuten = int(minuten)
+            except ValueError:
+                minuten = 0
 
             neuer_bericht = Arbeitsberichte(
                 username=username,
@@ -206,13 +203,12 @@ def arbeitsberichte_view(request):
             berichte.insert(0, neuer_bericht.to_dict())
             speichere_berichte(berichte)
 
-        return redirect("arbeitsberichte")
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
 
     #nur eigenen berichte angezeigt
-    username = request.session.get("username")
     eigene_berichte = []
     for b in berichte:
-        if b["username"] == username:
+        if b["username"] == user.username:
             eigene_berichte.append(b)
     
     #module laden
@@ -222,7 +218,8 @@ def arbeitsberichte_view(request):
         "arbeitsberichte": eigene_berichte,
         "role": user.role,
         "user": user,
-        "modules": modules
+        "modules": modules,
+        "user_id": user.id,
         })
 
 
@@ -275,11 +272,27 @@ def prozentanteile(username):
 
 #GESAMTÜBERSICHT
 def gesamtuebersicht(request):
-    username = request.session["username"]
-    if not username:
+    user_id = request.GET.get("user_id")
+    if not user_id:
         return redirect("login")
-    daten = prozentanteile(username)
-    return render(request, "meine_app/gesamtuebersicht.html", {"daten": daten})
+    
+    users = load_users()
+
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+
+    if user is None:
+        return redirect("login")
+
+    daten = prozentanteile(user.username)
+    return render(request, "meine_app/gesamtuebersicht.html", {
+        "daten": daten,
+        "user": user,
+        "user_id": user.id
+    })
 
 
 #-----------------------------------------------------------
@@ -302,11 +315,30 @@ def save_modules(modules_list):
 
 
 def admin_modules(request):
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if user is None:
+        return redirect("login")
+    
+    if user.role != "admin":
+        return HttpResponse("Zugriff verweigert - keine Admin-Rechte.")
+    
+
     if request.method == "POST":
         text = request.POST.get("module")
 
         if not text:
-            return redirect("admin_modules")
+            return redirect(f"/admin_modules?user_id={user.id}")
         
         modules_list = []
         for m in text.split("\n"):
@@ -315,7 +347,7 @@ def admin_modules(request):
                 modules_list.append(m)
 
         save_modules(modules_list)
-        return redirect("arbeitsberichte")
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
     
     modules = load_modules()
     modules_text = ""
@@ -323,7 +355,9 @@ def admin_modules(request):
         modules_text += m + "\n"
 
     return render(request, "meine_app/admin_modules.html", {
-        "modules_text": modules_text
+        "modules_text": modules_text,
+        "user": user,
+        "user_id": user.id
     })
 
 
@@ -331,73 +365,121 @@ def admin_modules(request):
 
 #VIP ANFRAGEN
 def request_vip(request):
-    email = request.session.get("user_email")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
-
+    user = None
     for u in users:
-        if u.email == email:
-            if u.role != "einfach":
-                return redirect("arbeitsberichte")
-            u.vip_request = True
+        if str(u.id) == user_id:
+            user = u
             break
     
+    if user is None:
+        return redirect("login")
+    
+    if user.role != "einfach":
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
+
+    user.vip_request = True
     save_users(users)
-    return redirect("arbeitsberichte")
+
+    return redirect(f"/arbeitsberichte?user_id={user.id}")
 
 #einf. anw. bestätigt anfrage:
 def bestaetige_vip(request):
-    return render(request, "meine_app/bestaetige_vip.html")
+    user_id = request.GET.get("user_id")
+    return render(request, "meine_app/bestaetige_vip.html", {
+        "user_id": user_id
+    })
 
 
 #ADMIN ANFRAGEN
 def request_admin(request):
-    email = request.session.get("user_email")
-    users = load_users()
-
-    for u in users:
-        if u.email == email:
-            if u.role != "vip":
-                return redirect("arbeitsberichte")
-            u.admin_request = True
-            break
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
     
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+
+    if user is None:
+        return redirect("login")
+
+    if user.role != "vip":
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
+    
+    user.admin_request = True
     save_users(users)
-    return redirect("arbeitsberichte")
+    
+    return redirect(f"/arbeitsberichte?user_id={user.id}")
 
 #vip bestätigt anfrage:
 def bestaetige_admin(request):
-    return render(request, "meine_app/bestaetige_admin.html")
+    user_id = request.GET.get("user_id")
+    return render(request, "meine_app/bestaetige_admin.html"), {
+        "user_id": user_id
+    }
 
 
 #----------------------------
-#ADMIN: LISTE ALLER ANFRAGEN
+#ADMIN: LISTE ALLER ANFRAGEN + GENEHMIGUNGEN
 def admin_request_list(request):
-    email = request.session.get("user_email")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
 
-    #1. aktuellen user
+    #benutzer anhand id finden
     aktueller_user = None
     for u in users:
-        if u.email == email:
+        if str(u.id) == user_id:
             aktueller_user = u
             break
-    #2. prüfen ob admin
-    if aktueller_user is None or aktueller_user.role != "admin":
-        return redirect("arbeitsberichte")
-    #3. alle offenen anträge
+
+    if aktueller_user is None:
+        return redirect("login")
+    
+    #prüfen ob admin
+    if aktueller_user.role != "admin":
+        return redirect(f"/arbeitsberichte?user_id={aktueller_user.id}")
+    
+    #alle offenen anträge
     offene = []
     for u in users:
         if u.vip_request or u.admin_request:
             offene.append(u)
 
     return render(request, "meine_app/admin_request_list.html", {
-        "requests": offene
+        "requests": offene,
+        "user": aktueller_user,
+        "user_id": aktueller_user.id
     })
 
 
 def genehmige_vip(request, email):
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
 
+    aktueller_user = None
+    for u in users:
+        if str(u.id) == user_id:
+            aktueller_user = u
+            break
+    users = load_users()
+
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("login")
+    
     for u in users:
         if u.email == email:
             u.role = "vip"
@@ -405,48 +487,110 @@ def genehmige_vip(request, email):
             break
     
     save_users(users)
-    return redirect("admin_request_list")
+    return redirect(f"/admin_request_list?user_id={aktueller_user.id}")
 
 def genehmige_admin(request, email):
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
 
+    aktueller_user = None
+    for u in users:
+        if str(u.id) == user_id:
+            aktueller_user = u
+            break
+    
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("login")
+    
     for u in users:
         if u.email == email:
             u.role = "admin"
             u.admin_request = False
             break
-    
+
     save_users(users)
-    return redirect("admin_request_list")
+
+    return redirect(f"/admin_request_list?user_id={aktueller_user.id}")
 
 
 def admin_user_list(request):
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
     users = load_users()
-    return render(request, "meine_app/admin_user_list.html", {"users": users})
+
+    aktueller_user = None
+    for u in users:
+        if str(u.id) == user_id:
+            aktueller_user = u
+            break
+    
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("login")
+    
+    return render(request, "meine_app/admin_user_list.html", {
+        "users": users,
+        "user": aktueller_user,
+        "user_id": aktueller_user.id
+    })
 
 
+#----------------------------
 #admin: USER SPERREN
-def user_sperren(request, user_id):
+def user_sperren(request, target_id):
+    admin_id = request.GET.get("user_id")
+    if not admin_id:
+        return redirect("login")
+
     users = load_users()
+
+    aktueller_user = None
+    for u in users:
+        if str(u.id) == admin_id:
+            aktueller_user = u
+            break
+    
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("login")
 
     for u in users:
-        if u.id == user_id:
+        if u.id == target_id:
             u.is_active = False
+            break
     
     save_users(users)
-    return redirect("admin_user_list")
+
+    return redirect(f"/admin_user_list?user_id={aktueller_user.id}")
 
 #admin: USER ENTSPERREN
-def user_entsperren(request, user_id):
+def user_entsperren(request, target_id):
+    admin_id = request.GET.get("user_id")
+    if not admin_id:
+        return redirect("login")
+
     users = load_users()
 
+    aktueller_user = None
     for u in users:
-        if u.id == user_id:
+        if str(u.id) == admin_id:
+            aktueller_user = u
+            break
+    
+    if aktueller_user is None or aktueller_user.role != "admin":
+        return redirect("login")
+    
+    for u in users:
+        if u.id == target_id:
             u.is_active = True
+            break
     
     save_users(users)
-    return redirect("admin_user_list")
 
+    return redirect(f"/admin_user_list?user_id={aktueller_user.id}")
 
 
 #----------------------------------------------------------
@@ -454,12 +598,25 @@ def user_entsperren(request, user_id):
 
 #DOWNLOADS
 def download_json(request):
-    username = request.session.get("username")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if user is None:
+        return redirect("login")
+    
     berichte = lade_berichte()
 
     eigene = []
     for b in berichte:
-        if b["username"] == username:
+        if b["username"] == user.username:
             eigene.append(b)
     
     text = json.dumps(eigene, indent=4, ensure_ascii=False)
@@ -469,12 +626,25 @@ def download_json(request):
     return response
 
 def download_csv(request):
-    username = request.session.get("username")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if user is None:
+        return redirect("login")
+    
     berichte = lade_berichte()
 
     eigene = []
     for b in berichte:
-        if b["username"] == username:
+        if b["username"] == user.username:
             eigene.append(b)
     
     text = "modul,datum,minuten,inhalt\n"
@@ -486,12 +656,25 @@ def download_csv(request):
     return response
 
 def download_xml(request):
-    username = request.session.get("username")
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if user is None:
+        return redirect("login")
+    
     berichte = lade_berichte()
 
     eigene = []
     for b in berichte:
-        if b["username"] == username:
+        if b["username"] == user.username:
             eigene.append(b)
     
     text = "<arbeitsberichte>\n"
@@ -510,41 +693,62 @@ def download_xml(request):
     response["Content-Disposition"] = 'attachment; filename="berichte.xml"'
     return response
 
+#-------
 #UPLOAD 
 def upload_data(request):
     if request.method != "POST":
         return redirect("arbeitsberichte")
     
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if user is None:
+        return redirect("login")
+
     datei = request.FILES.get("datei")
     if not datei:
-        return redirect("arbeitsberichte")
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
     
-    username = request.session.get("username")
     alle = lade_berichte()
+    neue = []
 
     #JSON
     if datei.name.endswith(".json"):
         neue = json.load(datei)
+        
+        for b in neue:
+            b["username"] = user.username
+
     #CSV
     elif datei.name.endwith(".csv"):
-        neue = []
         lines = datei.read().decode("utf-8").splitlines()
 
+        neue = []
         for line in lines[1:]:
             modul, datum, minuten, inhalt = line.split(",")
 
             neue.append({
-                "username": username,
-                "modul": modul,
-                "datum": datum,
+                "username": user.username,
+                "modul": modul.strip(),
+                "datum": datum.strip(),
                 "minuten": int(minuten),
-                "inhalt": inhalt
+                "inhalt": inhalt.strip()
             })
+
     elif datei.name.endwith(".xml"):
-        neue = []
         text = datei.read().decode("utf-8")
 
+        neue = []
         einträge = text.split("<bericht>")[1:]
+
         for e in einträge:
             modul = e.split("<modul>")[1].split("</modul>")[0]
             datum = e.split("<datum>")[1].split("</datum>")[0]
@@ -552,7 +756,7 @@ def upload_data(request):
             inhalt = e.split("<inhalt>")[1].split("</inhalt>")[0]
 
             neue.append({
-                "username": username,
+                "username": user.username,
                 "modul": modul,
                 "datum": datum,
                 "minuten": int(minuten),
@@ -561,15 +765,13 @@ def upload_data(request):
     
     neue_liste = []
     for b in alle:
-        if b["username"] != username:
+        if b["username"] != user.username:
             neue_liste.append(b)
     
     for b in neue:
         neue_liste.append(b)
 
-    alle = neue_liste
+    speichere_berichte(neue_liste)
 
-    speichere_berichte(alle)
-
-    return redirect("arbeitsberichte")
+    return redirect(f"/arbeitsberichte?user_id={user.id}")
 
