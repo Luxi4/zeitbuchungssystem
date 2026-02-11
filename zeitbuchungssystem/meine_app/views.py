@@ -193,7 +193,7 @@ def arbeitsberichte_view(request):
                 minuten = 0
 
             neuer_bericht = Arbeitsberichte(
-                username=username,
+                username=user.username,
                 modul=modul,
                 datum=datum,
                 minuten=minuten,

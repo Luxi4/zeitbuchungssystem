@@ -1,5 +1,12 @@
 [
   {
+    "username": "Cai_Lucy",
+    "modul": "1.4.2 SE 2",
+    "datum": "11.02.2026",
+    "minuten": 100,
+    "inhalt": "sessions entfernt und durch user_id in der url ersetzt"
+  },
+  {
     "username": "Ari_Lune",
     "modul": "1.1.2 Inf II",
     "datum": "11.02.2026",
