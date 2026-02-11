@@ -160,8 +160,8 @@ def request_vip(request):
     return redirect("arbeitsberichte")
 
 #einf. anw. bestätigt anfrage:
-def bestätige_vip(request):
-    return render(request, "meine_app/bestätige_vip.html")
+def bestaetige_vip(request):
+    return render(request, "meine_app/bestaetige_vip.html")
 
 #ADMIN ANFRAGEN
 def request_admin(request):
@@ -179,8 +179,8 @@ def request_admin(request):
     return redirect("arbeitsberichte")
 
 #vip bestätigt anfrage:
-def bestätige_admin(request):
-    return render(request, "meine_app/bestätige_admin.html")
+def bestaetige_admin(request):
+    return render(request, "meine_app/bestaetige_admin.html")
 
 
 #ADMIN: liste aller anfragen
@@ -287,12 +287,12 @@ def user_entsperren(request, user_id):
 
 
 #GESAMTÜBERSICHT
-def gesamtübersicht(request):
+def gesamtuebersicht(request):
     username = request.session["username"]
     if not username:
         return redirect("login")
     daten = prozentanteile(username)
-    return render(request, "meine_app/gesamtübersicht.html", {"daten": daten})
+    return render(request, "meine_app/gesamtuebersicht.html", {"daten": daten})
 
 
 

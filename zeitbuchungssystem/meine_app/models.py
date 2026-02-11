@@ -134,7 +134,7 @@ def prozentanteile(username):
 #ADMIN
 def load_modules():
     try:
-        with open(pfad_modules, "r") as f:
+        with open(pfad_modules, "r", encoding="utf-8") as f:
             data = json.load(f)
             return data.get("modules", [])
     except FileNotFoundError:
@@ -143,6 +143,6 @@ def load_modules():
 
 def save_modules(modules_list):
     data = {"modules": modules_list}
-    with open(pfad_modules, "w") as f:
-        json.dump(data, f, indent=4)
+    with open(pfad_modules, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
