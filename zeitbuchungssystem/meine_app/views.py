@@ -11,6 +11,12 @@ pfad_arbeitsberichte = BASE_DIR / "data" / "arbeitsberichte.json"
 pfad_modules = BASE_DIR / "data" / "modules.json"
 
 
+def home(request):
+    return render(request, "meine_app/home.html")
+
+
+#USER-BEREICH
+
 class UserData:
     def __init__(self, username, email, password, role="einfach", vip_request=False, admin_request=False, is_active=True, user_id=None):
         self.username = username
@@ -47,23 +53,6 @@ class UserData:
             user_id=data.get("id"),
         )
 
-class Arbeitsberichte:
-    def __init__(self, username, modul, datum, minuten, inhalt):
-        self.username = username
-        self.modul = modul
-        self.datum = datum
-        self.minuten = minuten
-        self.inhalt = inhalt
-
-    def to_dict(self):
-        return {
-            "username": self.username,
-            "modul": self.modul,
-            "datum": self.datum,
-            "minuten": self.minuten,
-            "inhalt": self.inhalt,
-        }
-
 def load_users():
     if pfad_users.exists():
         with pfad_users.open("r", encoding="utf-8") as f:
@@ -74,86 +63,6 @@ def load_users():
 def save_users(users):
     with pfad_users.open("w", encoding="utf-8") as f:
         json.dump([u.to_dict() for u in users], f, indent=4, ensure_ascii=False)
-
-
-def lade_berichte():
-    try:
-        with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-
-def speichere_berichte(berichte):
-    with open(pfad_arbeitsberichte, "w", encoding="utf-8") as f:
-        json.dump(berichte, f, indent=2, ensure_ascii=False)
-
-
-#gesamtübersicht
-def zeit_pro_modul(username):
-    with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
-        daten = json.load(f)
-
-        summen = {}
-
-        for eintrag in daten:
-            if eintrag.get("username") == username:
-                modul = eintrag["modul"]
-                minuten = eintrag["minuten"]
-
-                if modul not in summen:
-                    summen[modul] = 0
-            
-                summen[modul] += minuten
-
-        return summen
-
-def prozentanteile(username):
-    summen = zeit_pro_modul(username)
-
-    if not summen:
-        return []
-    
-    gesamt = 0
-    for modul in summen:
-        gesamt = gesamt + summen[modul]
-    
-    ergebnis = []
-    for modul in summen:
-        minuten = summen[modul]
-        prozent = round(minuten / gesamt * 100, 2)
-
-        eintrag = {
-            "modul": modul,
-            "minuten": minuten,
-            "prozent": prozent
-        }
-
-        ergebnis.append(eintrag)
-    
-    return ergebnis
-
-
-#ADMIN
-def load_modules():
-    try:
-        with open(pfad_modules, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("modules", [])
-    except FileNotFoundError:
-        return []
-
-
-def save_modules(modules_list):
-    data = {"modules": modules_list}
-    with open(pfad_modules, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
-
-
-#-----------------------------------------------------------
-
-
-def home(request):
-    return render(request, "meine_app/home.html")
 
 #REGISTRIERUNG
 def register(request):
@@ -226,9 +135,40 @@ def logout_view(request):
     request.session.flush() #löscht alle session-daten
     return redirect("home")
 
-#----------------------------------------------------------
 
-#ARBEITSBERICHTE
+#-----------------------------------------------------------
+
+#ARBEITSBERICHTE-BEREICH
+
+class Arbeitsberichte:
+    def __init__(self, username, modul, datum, minuten, inhalt):
+        self.username = username
+        self.modul = modul
+        self.datum = datum
+        self.minuten = minuten
+        self.inhalt = inhalt
+
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "modul": self.modul,
+            "datum": self.datum,
+            "minuten": self.minuten,
+            "inhalt": self.inhalt,
+        }
+
+def lade_berichte():
+    try:
+        with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+def speichere_berichte(berichte):
+    with open(pfad_arbeitsberichte, "w", encoding="utf-8") as f:
+        json.dump(berichte, f, indent=2, ensure_ascii=False)
+
+
 def arbeitsberichte_view(request):
     email = request.session.get("user_email")
     users = load_users()
@@ -286,6 +226,107 @@ def arbeitsberichte_view(request):
         })
 
 
+#-----------------------------------------------------------
+
+#GESAMTÜBERSICHT
+def zeit_pro_modul(username):
+    with open (pfad_arbeitsberichte, "r", encoding="utf-8") as f:
+        daten = json.load(f)
+
+        summen = {}
+
+        for eintrag in daten:
+            if eintrag.get("username") == username:
+                modul = eintrag["modul"]
+                minuten = eintrag["minuten"]
+
+                if modul not in summen:
+                    summen[modul] = 0
+            
+                summen[modul] += minuten
+
+        return summen
+
+def prozentanteile(username):
+    summen = zeit_pro_modul(username)
+
+    if not summen:
+        return []
+    
+    gesamt = 0
+    for modul in summen:
+        gesamt = gesamt + summen[modul]
+    
+    ergebnis = []
+    for modul in summen:
+        minuten = summen[modul]
+        prozent = round(minuten / gesamt * 100, 2)
+
+        eintrag = {
+            "modul": modul,
+            "minuten": minuten,
+            "prozent": prozent
+        }
+
+        ergebnis.append(eintrag)
+    
+    return ergebnis
+
+
+#GESAMTÜBERSICHT
+def gesamtuebersicht(request):
+    username = request.session["username"]
+    if not username:
+        return redirect("login")
+    daten = prozentanteile(username)
+    return render(request, "meine_app/gesamtuebersicht.html", {"daten": daten})
+
+
+#-----------------------------------------------------------
+
+#ADMIN-BEREICH
+
+#admin: MODULE FESTLEGEN
+def load_modules():
+    try:
+        with open(pfad_modules, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("modules", [])
+    except FileNotFoundError:
+        return []
+
+def save_modules(modules_list):
+    data = {"modules": modules_list}
+    with open(pfad_modules, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+
+
+def admin_modules(request):
+    if request.method == "POST":
+        text = request.POST.get("module")
+
+        if not text:
+            return redirect("admin_modules")
+        
+        modules_list = []
+        for m in text.split("\n"):
+            m = m.strip()
+            if m:
+                modules_list.append(m)
+
+        save_modules(modules_list)
+        return redirect("arbeitsberichte")
+    
+    modules = load_modules()
+    modules_text = ""
+    for m in modules:
+        modules_text += m + "\n"
+
+    return render(request, "meine_app/admin_modules.html", {
+        "modules_text": modules_text
+    })
+
+
 #----------------------------------------------------------
 
 #VIP ANFRAGEN
@@ -307,6 +348,7 @@ def request_vip(request):
 def bestaetige_vip(request):
     return render(request, "meine_app/bestaetige_vip.html")
 
+
 #ADMIN ANFRAGEN
 def request_admin(request):
     email = request.session.get("user_email")
@@ -327,7 +369,8 @@ def bestaetige_admin(request):
     return render(request, "meine_app/bestaetige_admin.html")
 
 
-#ADMIN: liste aller anfragen
+#----------------------------
+#ADMIN: LISTE ALLER ANFRAGEN
 def admin_request_list(request):
     email = request.session.get("user_email")
     users = load_users()
@@ -350,6 +393,7 @@ def admin_request_list(request):
     return render(request, "meine_app/admin_request_list.html", {
         "requests": offene
     })
+
 
 def genehmige_vip(request, email):
     users = load_users()
@@ -380,33 +424,8 @@ def admin_user_list(request):
     users = load_users()
     return render(request, "meine_app/admin_user_list.html", {"users": users})
 
-#admin: module festlegen
-def admin_modules(request):
-    if request.method == "POST":
-        text = request.POST.get("module")
 
-        if not text:
-            return redirect("admin_modules")
-        
-        modules_list = []
-        for m in text.split("\n"):
-            m = m.strip()
-            if m:
-                modules_list.append(m)
-
-        save_modules(modules_list)
-        return redirect("arbeitsberichte")
-    
-    modules = load_modules()
-    modules_text = ""
-    for m in modules:
-        modules_text += m + "\n"
-
-    return render(request, "meine_app/admin_modules.html", {
-        "modules_text": modules_text
-    })
-
-#admin: user sperren
+#admin: USER SPERREN
 def user_sperren(request, user_id):
     users = load_users()
 
@@ -417,7 +436,7 @@ def user_sperren(request, user_id):
     save_users(users)
     return redirect("admin_user_list")
 
-#admin: user entsperren
+#admin: USER ENTSPERREN
 def user_entsperren(request, user_id):
     users = load_users()
 
@@ -429,18 +448,9 @@ def user_entsperren(request, user_id):
     return redirect("admin_user_list")
 
 
-#----------------------------------------------------------
-
-#GESAMTÜBERSICHT
-def gesamtuebersicht(request):
-    username = request.session["username"]
-    if not username:
-        return redirect("login")
-    daten = prozentanteile(username)
-    return render(request, "meine_app/gesamtuebersicht.html", {"daten": daten})
-
 
 #----------------------------------------------------------
+#VIP-BEREICH
 
 #DOWNLOADS
 def download_json(request):
