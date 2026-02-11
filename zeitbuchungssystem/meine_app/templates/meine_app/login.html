@@ -1,16 +1,27 @@
-<h2>Login</h2>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
+    </head>
 
-{% if error %}
-<p style="color:red;">{{ error }}</p>
-{% endif %}
+    <body>
+        <h2>Login</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    <label>E-Mail:</label>
-    <input type="email" name="email" required>
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
 
-    <label>Passwort:</label>
-    <input type="password" name="password" required>
+        <form method="POST">
+            {% csrf_token %}
+            <label>E-Mail:</label>
+            <input type="email" name="email" required>
 
-    <button type="submit">Login</button>
-</form>
+            <label>Passwort:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>

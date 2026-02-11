@@ -1,35 +1,46 @@
-<h2>Alle Benutzer</h2>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
+    </head>
 
-<table>
-    <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Rolle</th>
-        <th>Status</th>
-        <th>Aktion</th>
-    </tr>
+    <body>
+        <h2>Alle Benutzer</h2>
 
-    {% for u in users %}
-    <tr>
-        <td>{{ u.username }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.role }}</td>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Rolle</th>
+                <th>Status</th>
+                <th>Aktion</th>
+            </tr>
 
-        <td>
-            {% if u.is_active %}
-                Aktiv
-            {% else %}
-                Gesperrt
-            {% endif %}
-        </td>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.role }}</td>
 
-        <td>
-            {% if u.is_active %}
-                <a href="{% url 'user_sperren' u.id %}">Sperren</a>
-            {% else %}
-                <a href="{% url 'user_entsperren' u.id %}">Entsperren</a>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+                <td>
+                    {% if u.is_active %}
+                        Aktiv
+                    {% else %}
+                        Gesperrt
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if u.is_active %}
+                        <a href="{% url 'user_sperren' u.id %}">Sperren</a>
+                    {% else %}
+                        <a href="{% url 'user_entsperren' u.id %}">Entsperren</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

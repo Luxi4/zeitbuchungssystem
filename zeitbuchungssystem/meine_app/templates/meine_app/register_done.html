@@ -1,8 +1,19 @@
-{% extends "meine_app/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
+    </head>
 
-{% block title %}Erfolgreich registriert{% endblock %}
+    <body>
+        {% extends "meine_app/base.html" %}
 
-{% block content %}
-<p>Du hast dich registriert.</p>
-<a href="/">zurück zur Übersicht</a>
-{% endblock %}
+        {% block title %}Erfolgreich registriert{% endblock %}
+
+        {% block content %}
+        <p>Du hast dich registriert.</p>
+        <a href="/">zurück zur Übersicht</a>
+        {% endblock %}
+</body>
+</html>

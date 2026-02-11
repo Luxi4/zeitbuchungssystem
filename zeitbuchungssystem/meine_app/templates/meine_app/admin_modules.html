@@ -1,11 +1,22 @@
-<h2>Module festlegen</h2>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
+    </head>
 
-<form method="post" action="{% url 'admin_modules' %}">
-    {% csrf_token %}
+    <body>
+        <h2>Module festlegen</h2>
 
-    <label for="module">Module (je Zeile eines):</label><br>
-    <textarea id="module" name="module" rows="8" cols="40">{{ modules_text }}</textarea>
+        <form method="post" action="{% url 'admin_modules' %}">
+            {% csrf_token %}
 
-    <br><br>
-    <button type="submit">Speichern</button>
-</form>
+            <label for="module">Module (je Zeile eines):</label><br>
+            <textarea id="module" name="module" rows="8" cols="40">{{ modules_text }}</textarea>
+
+            <br><br>
+            <button type="submit">Speichern</button>
+        </form>
+    </body>
+</html>

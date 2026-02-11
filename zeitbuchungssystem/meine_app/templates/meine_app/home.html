@@ -1,9 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
 	<title>Startseite</title>
 </head>
+
 <body>
     <h1>Willkommen im Arbeitszeit-Buchungssystem</h1>
     <p><a href="{% url 'login' %}">Zum Login</a></p>

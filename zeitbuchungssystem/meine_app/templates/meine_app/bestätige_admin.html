@@ -1,9 +1,20 @@
-<h2>Admin beantragen</h2>
-<p>Möchtest du wirklich Admin werden?</p>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
+    </head>
 
-<form action="{% url 'request_admin' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Ja, beantragen</button>
-</form>
+    <body>
+        <h2>Admin beantragen</h2>
+        <p>Möchtest du wirklich Admin werden?</p>
 
-<a href="{% url 'arbeitsberichte' %}">Nein, zurück</a>
+        <form action="{% url 'request_admin' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Ja, beantragen</button>
+        </form>
+
+        <a href="{% url 'arbeitsberichte' %}">Nein, zurück</a>
+    </body>
+</html>

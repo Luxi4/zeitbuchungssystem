@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <link rel="stylesheet" href="{% static 'meine_app/zeitbuchungssystem.css' %}">
         <title>Zeitbuchungssystem</title>
     </head>
@@ -9,8 +10,7 @@
     <body>
         <header class="header-bar">
             <div class="header-left">
-                <img src="{% static 'meine_app/logo.png' %}" alt="Logo" height="40px" width="40px">
-                    Zeitbuchungssystem
+                Zeitbuchungssystem
             </div>
 
             <div class="header-right">
@@ -23,14 +23,14 @@
             {% endif %}
 
             {% if request.session.user_email %}
-                <a href="{% url 'gesamtübersicht' %}">Gesamtübersicht</a>
+                <a href="{% url 'gesamtuebersicht' %}">Gesamtübersicht</a>
                 
                 {% if role == "einfach" %}
-                    <a href="{% url 'bestätige_vip' %}">VIP beantragen</a>
+                    <a href="{% url 'bestaetige_vip' %}">VIP beantragen</a>
                 {% endif %}
 
                 {% if role == "vip" %}
-                    <form action="{% url 'bestätige_admin' %}" method="post">
+                    <form action="{% url 'bestaetige_admin' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Admin beantragen</button>
                     </form>
@@ -45,7 +45,6 @@
         <table>
           <tr>
             <td>
-                <img src="profil_platzhaltergrafik.png" alt="Profil" height="130px" width=auto>
             </td>
             <td style="vertical-align: top; padding-left: 8px;">
                 <p>
