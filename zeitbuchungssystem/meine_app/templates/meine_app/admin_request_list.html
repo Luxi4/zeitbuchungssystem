@@ -27,11 +27,11 @@
 
                 <td>
                     {% if u.vip_request %}
-                        <a href="{% url 'genehmige_vip' u.email %}">VIP genehmigen</a>
+                        <a href="{% url 'genehmige_vip' u.email %}?user_id={{ user_id }}">VIP genehmigen</a>
                     {% endif %}
 
                     {% if u.admin_request %}
-                        <a href="{% url 'genehmige_admin' u.email %}">Admin genehmigen</a>
+                        <a href="{% url 'genehmige_admin' u.email %}?user_id={{ user_id }}">Admin genehmigen</a>
                     {% endif %}
                 </td>
             </tr>

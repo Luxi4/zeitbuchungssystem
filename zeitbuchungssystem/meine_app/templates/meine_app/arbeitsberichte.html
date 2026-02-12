@@ -17,50 +17,40 @@
 
             {% if role == "admin" %}
                 <strong>Admin-Bereich</strong>
-                <a href="{% url 'admin_request_list' %}">Anträge ansehen</a>
-                <a href="{% url 'admin_user_list' %}">Benutzer verwalten</a>
-                <a href="{% url 'admin_modules' %}">Module verwalten</a>
+                <a href="{% url 'admin_request_list' %}?user_id={{ user_id }}">Anträge ansehen</a>
+                <a href="{% url 'admin_user_list' %}?user_id={{ user_id }}">Benutzer verwalten</a>
+                <a href="{% url 'admin_modules' %}?user_id={{ user_id }}">Module verwalten</a>
             {% endif %}
 
-            {% if request.session.user_email %}
-                <a href="{% url 'gesamtuebersicht' %}">Gesamtübersicht</a>
+            {% if user %}
+                <a href="{% url 'gesamtuebersicht' %}?user_id={{ user_id }}">Gesamtübersicht</a>
                 
                 {% if role == "einfach" %}
-                    <a href="{% url 'bestaetige_vip' %}">VIP beantragen</a>
+                    <a href="{% url 'bestaetige_vip' %}?user_id={{ user_id }}">VIP beantragen</a>
                 {% endif %}
 
                 {% if role == "vip" %}
-                    <form action="{% url 'bestaetige_admin' %}" method="post">
+                    <form action="{% url 'bestaetige_admin' %}?user_id={{ user_id }}" method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user_id }}">
                         <button type="submit">Admin beantragen</button>
                     </form>
                 {% endif %}
 
-                <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+                <a href="{% url 'logout' %}?user_id={{ user_id }}" class="logout-button">Logout</a>
             {% endif %}
             </div>
         </header>
+
         <div style="height: 15px; background-color: lightgray;"></div>
 
-        <table>
-          <tr>
-            <td>
-            </td>
-            <td style="vertical-align: top; padding-left: 8px;">
-                <p>
-                    Name: Vorname Nachname<br> <!--!!!muss das hier dynamisch später machen, Daten iwo herbekommen!!!-->
-                    Matrikel-Nr.: 123456<br>
-                    Kurs: ABC24
-                </p>
-            </td>
-          </tr>
-        </table>
-        <br>
 
         <h4>Meine Arbeitsberichte</h4>
 
-        <form method="post">
+        <form method="post" action="?user_id={{ user_id }}">
             {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+
             <label for="modul">Modul:</label>
             <select name="modul">
                 {% for m in modules %}
@@ -81,11 +71,13 @@
         </form>
 
         {% if role == "vip" %}
-            <a href="{% url 'download_json' %}">JSON herunterladen</a>
-            <a href="{% url 'download_csv' %}">CSV herunterladen</a>
-            <a href="{% url 'download_xml' %}">XML herunterladen</a>
-            <form action="{% url 'upload_data' %}" method="post" enctype="multipart/form-data">
+            <a href="{% url 'download_json' %}?user_id={{ user_id }}">JSON herunterladen</a>
+            <a href="{% url 'download_csv' %}?user_id={{ user_id }}">CSV herunterladen</a>
+            <a href="{% url 'download_xml' %}?user_id={{ user_id }}">XML herunterladen</a>
+            
+            <form action="{% url 'upload_data' %}?user_id={{ user_id }}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user_id }}">
                 <input type="file" name="datei" required>
                 <button type="submit">Daten hochladen</button>
             </form>

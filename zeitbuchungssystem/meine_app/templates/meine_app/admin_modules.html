@@ -9,8 +9,10 @@
     <body>
         <h2>Module festlegen</h2>
 
-        <form method="post" action="{% url 'admin_modules' %}">
+        <form method="post" action="{% url 'admin_modules' %}?user_id={{ user_id }}">
             {% csrf_token %}
+
+            <input type="hidden" name="user_id" value="{{ user_id }}">
 
             <label for="module">Module (je Zeile eines):</label><br>
             <textarea id="module" name="module" rows="8" cols="40">{{ modules_text }}</textarea>

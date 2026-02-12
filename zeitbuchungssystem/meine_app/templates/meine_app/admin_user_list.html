@@ -34,9 +34,9 @@
 
                 <td>
                     {% if u.is_active %}
-                        <a href="{% url 'user_sperren' u.id %}">Sperren</a>
+                        <a href="{% url 'user_sperren' u.id %}?user_id={{ user_id }}">Sperren</a>
                     {% else %}
-                        <a href="{% url 'user_entsperren' u.id %}">Entsperren</a>
+                        <a href="{% url 'user_entsperren' u.id %}?user_id={{ user_id }}">Entsperren</a>
                     {% endif %}
                 </td>
             </tr>
