@@ -14,7 +14,7 @@ def home(request):
     return render(request, "meine_app/home.html")
 
 
-#REGISTRIEUNGS-BEREICH
+#REGISTRIERUNGS-BEREICH
 
 class UserData:
     def __init__(self, username, email, password, role="einfach", vip_request=False, admin_request=False, is_active=True, user_id=None):
