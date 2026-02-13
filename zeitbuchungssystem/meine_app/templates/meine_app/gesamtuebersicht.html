@@ -8,7 +8,12 @@
     </head>
 
     <body>
-        <header>Zeitbuchungssystem</header>
+        <header class="header-bar">
+            <div class="header-left">
+                <a href="{% url 'arbeitsberichte' %}?user_id={{ user_id }}">Zeitbuchungssystem</a>
+            </div>
+        </header>
+        
         <div style="height: 15px; background-color: lightgray;"></div>
     
     <div class = "bericht-A4">

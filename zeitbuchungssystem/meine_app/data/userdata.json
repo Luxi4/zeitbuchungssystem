@@ -24,8 +24,8 @@
         "username": "Ari_Lune",
         "email": "ari.lune@mail.de",
         "password": "passwort",
-        "role": "einfach",
-        "vip_request": true,
+        "role": "vip",
+        "vip_request": false,
         "admin_request": false,
         "is_active": true
     },
@@ -57,7 +57,7 @@
         "role": "einfach",
         "vip_request": false,
         "admin_request": false,
-        "is_active": true
+        "is_active": false
     },
     {
         "id": 7,

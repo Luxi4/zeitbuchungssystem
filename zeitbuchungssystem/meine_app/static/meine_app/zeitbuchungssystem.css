@@ -7,6 +7,12 @@
     background-color: #f0f0f0;
 }
 
+.header-left a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .header-left,
 .header-right {
     display: flex;

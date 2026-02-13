@@ -7,6 +7,12 @@
     </head>
 
     <body>
+        <header class="header-bar">
+            <div class="header-left">
+                <a href="{% url 'arbeitsberichte' %}?user_id={{ user_id }}">Zeitbuchungssystem</a>
+            </div>
+        </header>
+
         <h2>Module festlegen</h2>
 
         <form method="post" action="{% url 'admin_modules' %}?user_id={{ user_id }}">

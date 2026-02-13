@@ -223,6 +223,39 @@ def arbeitsberichte_view(request):
         })
 
 
+def bericht_loeschen(request, index):
+    user_id = request.GET.get("user_id")
+    if not user_id:
+        return redirect("login")
+    
+    users = load_users()
+    user = None
+    for u in users:
+        if str(u.id) == user_id:
+            user = u
+            break
+    
+    if not user:
+        return redirect("login")
+    
+    berichte = lade_berichte()
+
+    neue_liste = []
+    aktueller_index = 0
+
+    for b in berichte:
+        if aktueller_index == index and b["username"] == user.username:
+            pass
+        else:
+            neue_liste.append(b)
+        
+        aktueller_index += 1
+    
+    speichere_berichte(neue_liste)
+    
+    return redirect(f"/arbeitsberichte?user_id={user.id}")
+
+
 #-----------------------------------------------------------
 
 #GESAMTÜBERSICHT
@@ -422,9 +455,9 @@ def request_admin(request):
 #vip bestätigt anfrage:
 def bestaetige_admin(request):
     user_id = request.GET.get("user_id")
-    return render(request, "meine_app/bestaetige_admin.html"), {
+    return render(request, "meine_app/bestaetige_admin.html", {
         "user_id": user_id
-    }
+    })
 
 
 #----------------------------
@@ -487,7 +520,7 @@ def genehmige_vip(request, email):
             break
     
     save_users(users)
-    return redirect(f"/admin_request_list?user_id={aktueller_user.id}")
+    return redirect(f"/admin/request-list?user_id={aktueller_user.id}")
 
 def genehmige_admin(request, email):
     user_id = request.GET.get("user_id")
@@ -513,7 +546,7 @@ def genehmige_admin(request, email):
 
     save_users(users)
 
-    return redirect(f"/admin_request_list?user_id={aktueller_user.id}")
+    return redirect(f"/admin/request-list?user_id={aktueller_user.id}")
 
 
 def admin_user_list(request):
@@ -564,7 +597,7 @@ def user_sperren(request, target_id):
     
     save_users(users)
 
-    return redirect(f"/admin_user_list?user_id={aktueller_user.id}")
+    return redirect(f"/admin/user-list?user_id={aktueller_user.id}")
 
 #admin: USER ENTSPERREN
 def user_entsperren(request, target_id):
@@ -590,7 +623,7 @@ def user_entsperren(request, target_id):
     
     save_users(users)
 
-    return redirect(f"/admin_user_list?user_id={aktueller_user.id}")
+    return redirect(f"/admin/user-list?user_id={aktueller_user.id}")
 
 
 #----------------------------------------------------------

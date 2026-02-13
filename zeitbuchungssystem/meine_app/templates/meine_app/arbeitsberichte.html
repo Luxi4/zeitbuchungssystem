@@ -10,7 +10,7 @@
     <body>
         <header class="header-bar">
             <div class="header-left">
-                Zeitbuchungssystem
+                <a href="{% url 'arbeitsberichte' %}?user_id={{ user_id }}">Zeitbuchungssystem</a>
             </div>
 
             <div class="header-right">
@@ -30,11 +30,7 @@
                 {% endif %}
 
                 {% if role == "vip" %}
-                    <form action="{% url 'bestaetige_admin' %}?user_id={{ user_id }}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="user_id" value="{{ user_id }}">
-                        <button type="submit">Admin beantragen</button>
-                    </form>
+                    <a href="{% url 'bestaetige_admin' %}?user_id={{ user_id }}">Admin beantragen</a>
                 {% endif %}
 
                 <a href="{% url 'logout' %}?user_id={{ user_id }}" class="logout-button">Logout</a>
@@ -89,6 +85,7 @@
                 <th>Datum</th>
                 <th>Arbeitszeit (min)</th>
                 <th>Bericht</th>
+                <th>Aktion</th>
             </tr>
             
         {% for bericht in arbeitsberichte %}
@@ -97,10 +94,17 @@
             <td>{{ bericht.datum }}</td>
             <td style="text-align: right;">{{ bericht.minuten }}</td>
             <td>{{ bericht.inhalt }}</td>
+
+            <td>
+                <a href="{% url 'bericht_loeschen' forloop.counter0%}?user_id={{ user_id }}">
+                    Löschen
+                </a>
+            </td>
         </tr>
+
         {% empty %}
         <tr>
-            <td colspan="4">Noch keine Einträge.</td>
+            <td colspan="5">Noch keine Einträge.</td>
         </tr>
         {% endfor %}
         </table>
