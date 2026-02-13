@@ -10,11 +10,12 @@
         <h2>Admin beantragen</h2>
         <p>Möchtest du wirklich Admin werden?</p>
 
-        <form action="{% url 'request_admin' %}" method="post">
+        <form action="{% url 'request_admin' %}?user_id={{ user_id }}" method="post">
             {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user_id}}">
             <button type="submit">Ja, beantragen</button>
         </form>
 
-        <a href="{% url 'arbeitsberichte' %}">Nein, zurück</a>
+        <a href="{% url 'arbeitsberichte' %}?user_id={{ user_id }}">Nein, zurück</a>
     </body>
 </html>

@@ -1,4 +1,7 @@
+{% extends "meine_app/base.html" %}
 {% load static %}
+
+{% block title %}Erfolgreich registriert{% endblock %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,10 +10,6 @@
     </head>
 
     <body>
-        {% extends "meine_app/base.html" %}
-
-        {% block title %}Erfolgreich registriert{% endblock %}
-
         {% block content %}
         <p>Du hast dich registriert.</p>
         <a href="/">zurück zur Übersicht</a>

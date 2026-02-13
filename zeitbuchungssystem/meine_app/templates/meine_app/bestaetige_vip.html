@@ -10,11 +10,12 @@
         <h2>VIP beantragen</h2>
         <p>Möchtest du wirklich VIP werden?</p>
 
-        <form action="{% url 'request_vip' %}" method="post">
+        <form action="{% url 'request_vip' %}?user_id={{ user_id }}" method="post">
             {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user_id }}">
             <button type="submit">Ja, beantragen</button>
         </form>
 
-        <a href="{% url 'arbeitsberichte' %}">Nein, zurück</a>
+        <a href="{% url 'arbeitsberichte' %}?user_id={{ user_id }}">Nein, zurück</a>
     </body>
 </html>
