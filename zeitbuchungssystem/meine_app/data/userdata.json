@@ -98,5 +98,15 @@
         "vip_request": false,
         "admin_request": false,
         "is_active": true
+    },
+    {
+        "id": 11,
+        "username": "xilu",
+        "email": "xilu111@gmail.de",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": false,
+        "admin_request": false,
+        "is_active": true
     }
 ]

@@ -39,24 +39,23 @@ class UserData:
             "is_active": self.is_active,
         }
 
-    @classmethod
-    def from_dict(cls, data):
-        return cls(
-            username=data.get("username"),
-            email=data.get("email"),
-            password=data.get("password"),
-            role=data.get("role", "einfach"),
-            vip_request=data.get("vip_request", False),
-            admin_request=data.get("admin_request", False),
-            is_active=data.get("is_active", True),
-            user_id=data.get("id"),
-        )
+def from_dict(data):
+    return UserData(
+        username=data.get("username"),
+        email=data.get("email"),
+        password=data.get("password"),
+        role=data.get("role", "einfach"),
+        vip_request=data.get("vip_request", False),
+        admin_request=data.get("admin_request", False),
+        is_active=data.get("is_active", True),
+        user_id=data.get("id"),
+    )
 
 def load_users():
     if pfad_users.exists():
         with pfad_users.open("r", encoding="utf-8") as f:
             data = json.load(f)
-            return [UserData.from_dict(obj) for obj in data]
+            return [from_dict(obj) for obj in data]
     return []
 
 def save_users(users):
@@ -100,8 +99,6 @@ def register(request):
     
     return render(request, "meine_app/register.html")
 
-def success(request):
-    return render(request, "meine_app/success.html")
 
 #LOGIN
 def login_view(request):
