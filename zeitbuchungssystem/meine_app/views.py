@@ -379,7 +379,7 @@ def admin_modules(request):
         save_modules(modules_list)
         return redirect(f"/arbeitsberichte?user_id={user.id}")
     
-    
+
     modules = load_modules()
     modules_text = ""
     for m in modules:
@@ -547,6 +547,7 @@ def genehmige_admin(request, email):
     return redirect(f"/admin/request-list?user_id={aktueller_user.id}")
 
 
+#------------------------------
 def admin_user_list(request):
     user_id = request.GET.get("user_id")
     if not user_id:
@@ -570,7 +571,6 @@ def admin_user_list(request):
     })
 
 
-#----------------------------
 #admin: USER SPERREN
 def user_sperren(request, target_id):
     admin_id = request.GET.get("user_id")
