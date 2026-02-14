@@ -379,6 +379,7 @@ def admin_modules(request):
         save_modules(modules_list)
         return redirect(f"/arbeitsberichte?user_id={user.id}")
     
+    
     modules = load_modules()
     modules_text = ""
     for m in modules:
@@ -457,7 +458,7 @@ def bestaetige_admin(request):
     })
 
 
-#----------------------------
+#-------------------------------------------
 #ADMIN: LISTE ALLER ANFRAGEN + GENEHMIGUNGEN
 def admin_request_list(request):
     user_id = request.GET.get("user_id")
