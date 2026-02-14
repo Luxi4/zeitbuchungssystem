@@ -753,45 +753,11 @@ def upload_data(request):
     #JSON
     if datei.name.endswith(".json"):
         neue = json.load(datei)
-        
         for b in neue:
             b["username"] = user.username
-
-    #CSV
-    elif datei.name.endwith(".csv"):
-        lines = datei.read().decode("utf-8").splitlines()
-
-        neue = []
-        for line in lines[1:]:
-            modul, datum, minuten, inhalt = line.split(",")
-
-            neue.append({
-                "username": user.username,
-                "modul": modul.strip(),
-                "datum": datum.strip(),
-                "minuten": int(minuten),
-                "inhalt": inhalt.strip()
-            })
-
-    elif datei.name.endwith(".xml"):
-        text = datei.read().decode("utf-8")
-
-        neue = []
-        einträge = text.split("<bericht>")[1:]
-
-        for e in einträge:
-            modul = e.split("<modul>")[1].split("</modul>")[0]
-            datum = e.split("<datum>")[1].split("</datum>")[0]
-            minuten = e.split("<minuten>")[1].split("</minuten>")[0]
-            inhalt = e.split("<inhalt>")[1].split("</inhalt>")[0]
-
-            neue.append({
-                "username": user.username,
-                "modul": modul,
-                "datum": datum,
-                "minuten": int(minuten),
-                "inahlt": inhalt
-            })
+    
+    else:
+        return redirect(f"/arbeitsberichte?user_id={user.id}")
     
     neue_liste = []
     for b in alle:
