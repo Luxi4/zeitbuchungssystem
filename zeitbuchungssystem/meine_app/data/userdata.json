@@ -108,5 +108,15 @@
         "vip_request": false,
         "admin_request": false,
         "is_active": true
+    },
+    {
+        "id": 12,
+        "username": "1905",
+        "email": "1905@mail.com",
+        "password": "passwort",
+        "role": "einfach",
+        "vip_request": true,
+        "admin_request": false,
+        "is_active": true
     }
 ]
